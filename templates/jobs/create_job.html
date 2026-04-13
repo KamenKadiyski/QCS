@@ -1,0 +1,17 @@
+{% extends 'shared/../shared/base.html' %}
+{% block content %}
+    <h1>Add details for the job</h1>
+    <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div>
+                <button class="btn btn-primary px4" type="submit"><i class="bi bi-check-lg me-1"></i> Add</button>
+                <button class="btn btn-outline-danger px4" type="reset"><i class="bi bi-x-circle me-1"></i> Reset"</button>
+                <a href="{% url 'jobs:list_jobs' %}" class="btn btn-outline-secondary ms-auto">Cancel</a>
+            </div>
+            {% if form.errors %}
+
+            {% endif %}
+    </form>
+
+{% endblock %}

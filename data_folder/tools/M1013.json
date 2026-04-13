@@ -1,0 +1,13 @@
+ {
+    "code": "2K-01",
+    "description": "2K Матрица за кофа 10L с вградено гумено уплътнение (PP + TPE)",
+    "clamping_force": 9800,
+    "tool_width": 1150.0,
+    "tool_height": 1150.0,
+    "tool_thickness": 950.0,
+    "moving_platen_stroke": 1300.0,
+    "injection_capacity": 4500.0,
+    "ejecting_stroke": 450.0,
+    "number_of_ejector_cores": 8,
+    "is_in_use": false
+  }

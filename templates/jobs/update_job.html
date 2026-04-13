@@ -1,0 +1,60 @@
+{% extends 'shared/../shared/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow">
+        <div class="card-header bg-dark text-white">
+            <h4 class="mb-0">{{ page_title }} - {{ object.job_code }}</h4>
+        </div>
+        <div class="card-body">
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="row">
+                    <!-- Основни данни -->
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Job Code</label>
+                        {{ form.job_code }}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Customer</label>
+                        {{ form.customer }}
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">Description</label>
+                    {{ form.description }}
+                </div>
+
+                <hr>
+                <h5>Resources (Select Multiple)</h5>
+                <div class="row">
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label fw-bold">Materials</label>
+                        {{ form.materials }}
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label fw-bold">Additives</label>
+                        {{ form.additives }}
+                    </div>
+                    <div class="col-md-4 mb-3">
+                        <label class="form-label fw-bold">Tools</label>
+                        {{ form.tools }}
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label fw-bold">QC & Additional Notes</label>
+                    {{ form.qc_and_additional_notes }}
+                </div>
+
+                <div class="mt-4 border-top pt-3 text-end">
+                    <a href="{% url 'jobs:list_jobs' %}" class="btn btn-secondary me-2">Cancel</a>
+                    <button type="submit" class="btn btn-primary px-5">Save Changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

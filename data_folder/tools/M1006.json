@@ -1,0 +1,13 @@
+{
+    "code": "BMB-06",
+    "description": "Матрица за правоъгълни кутии за храна 1L - 4 гнезда",
+    "clamping_force": 4850,
+    "tool_width": 820.0,
+    "tool_height": 710.0,
+    "tool_thickness": 620.0,
+    "moving_platen_stroke": 700.0,
+    "injection_capacity": 620.0,
+    "ejecting_stroke": 220.0,
+    "number_of_ejector_cores": 4,
+    "is_in_use": false
+  }

@@ -1,0 +1,99 @@
+{% extends "shared/base.html" %}
+
+{% block content %}
+<div class="container mt-5 pb-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-7">
+            <div class="card shadow-lg border-0 border-top border-warning border-4">
+                <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0 text-dark fw-bold">
+                        <i class="bi bi-pencil-square text-warning me-2"></i>
+                        Registred QC Issue #{{ object.pk }}
+                    </h4>
+                    <span class="badge bg-light text-dark border small">Job: {{ object.job_log }}</span>
+                </div>
+                <div class="card-body p-4 bg-white text-dark">
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+                        <div class="row g-2 mb-4 p-3 bg-light rounded border mx-0 text-center small">
+                            <div class="col-6 border-end">
+                                <span class="text-muted d-block fw-bold text-uppercase">Created at:</span>
+                                <span>{{ object.logged_at|date:"d.m.Y H:i" }} ч.</span>
+                            </div>
+                            <div class="col-6">
+                                <span class="text-muted d-block fw-bold text-uppercase">Last updated</span>
+                                <span>{{ object.updated_at|date:"d.m.Y H:i" }} ч.</span>
+                            </div>
+                        </div>
+                        {% if form.errors %}
+                        <div class="alert alert-danger shadow-sm mb-4 small">
+                            <strong>Error while saving the form!</strong> Please check the fields below..
+                        </div>
+                        {% endif %}
+                        <div class="mb-4">
+                            <label class="form-label fw-bold small text-muted">JOB LOG</label>
+                            {{ form.job_log }}
+                            {% if form.job_log.errors %}<div class="text-danger small">{{ form.job_log.errors }}</div>{% endif %}
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label fw-bold small text-muted">PROBLEM DESCRIPTION</label>
+                            {{ form.issue_description }}
+                            {% if form.issue_description.errors %}<div class="text-danger small">{{ form.issue_description.errors }}</div>{% endif %}
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label fw-bold small text-muted">RESPONSIBLE PERSON (ASSIGNED TO)</label>
+                            {{ form.assigned_to }}
+                            {% if form.assigned_to.errors %}<div class="text-danger small">{{ form.assigned_to.errors }}</div>{% endif %}
+                        </div>
+                        <div class="mb-4 p-3 border rounded bg-white shadow-sm border-warning border-opacity-25">
+                            <div class="form-check form-switch d-flex justify-content-between align-items-center p-0">
+                                <label class="form-check-label fw-bold mb-0" for="{{ form.is_sorted.id_for_label }}">
+                                    <i class="bi bi-check-circle-fill text-success me-1"></i> Issue solved / Sorted
+                                </label>
+                                {{ form.is_sorted }}
+                            </div>
+                        </div>
+                        <hr class="my-4">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <a href="{% url 'qcloging:list_qc_issues' %}" class="btn btn-outline-secondary px-4">
+                                <i class="bi bi-arrow-left"></i> Back to list
+                            </a>
+                            <button type="submit" class="btn btn-warning btn-lg px-5 shadow fw-bold text-dark">
+                                <i class="bi bi-save me-1"></i> Update the issue
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <p class="text-center text-muted mt-3 small">
+                <i class="bi bi-info-circle"></i> Changing the status to "Sorted" will reflect the issue as resolved in the list.
+            </p>
+        </div>
+    </div>
+</div>
+
+<style>
+    textarea.form-control {
+        min-height: 140px;
+        resize: vertical;
+    }
+    .form-switch .form-check-input {
+        width: 3.2em !important;
+        height: 1.6em !important;
+        cursor: pointer;
+        margin-left: 0;
+    }
+    .form-check-input:checked {
+        background-color: #ffc107 !important;
+        border-color: #ffc107 !important;
+    }
+    .form-control:focus {
+        border-color: #ffc107;
+        box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.2);
+    }
+    .card {
+        border-radius: 15px;
+        overflow: hidden;
+    }
+</style>
+{% endblock %}

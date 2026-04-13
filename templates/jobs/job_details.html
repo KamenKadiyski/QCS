@@ -1,0 +1,83 @@
+{% extends 'shared/../shared/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow">
+        <!-- Заглавна част с името на работата -->
+        <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
+            <h3 class="mb-0">{{ page_title|default:"Job Details" }}: {{ object.job_code }}</h3>
+            <span class="badge bg-info text-dark">Customer: {{ object.customer }}</span>
+        </div>
+
+        <div class="card-body">
+            <!-- Описание -->
+            <div class="mb-4">
+                <h5 class="text-primary border-bottom pb-2">Description</h5>
+                <p class="lead">{{ object.description }}</p>
+            </div>
+
+            <div class="row">
+                <!-- Списък с материали -->
+                <div class="col-md-4 mb-3">
+                    <div class="p-3 border rounded bg-light h-100">
+                        <h6 class="fw-bold"><i class="bi bi-box-seam"></i> Materials</h6>
+                        <ul class="list-unstyled mb-0">
+                            {% for material in object.materials.all %}
+                                <li><i class="bi bi-check2-circle text-success"></i> {{ material.name }}</li>
+                            {% empty %}
+                                <li class="text-muted italic">No materials assigned</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Списък с добавки -->
+                <div class="col-md-4 mb-3">
+                    <div class="p-3 border rounded bg-light h-100">
+                        <h6 class="fw-bold"><i class="bi bi-plus-circle-dotted"></i> Additives</h6>
+                        <ul class="list-unstyled mb-0">
+                            {% for additive in object.additives.all %}
+                                <li><i class="bi bi-check2-circle text-info"></i> {{ additive.name }}</li>
+                            {% empty %}
+                                <li class="text-muted italic">No additives assigned</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Списък с инструменти -->
+                <div class="col-md-4 mb-3">
+                    <div class="p-3 border rounded bg-light h-100">
+                        <h6 class="fw-bold"><i class="bi bi-tools"></i> Tools</h6>
+                        <ul class="list-unstyled mb-0">
+                            {% for tool in object.tools.all %}
+                                <li><i class="bi bi-check2-circle text-warning"></i> {{ tool.description }}</li>
+                            {% empty %}
+                                <li class="text-muted italic">No tools assigned</li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- QC Бележки -->
+            {% if object.qc_and_additional_notes %}
+            <div class="mt-4 p-3 border-start border-4 border-warning bg-light">
+                <h6 class="fw-bold text-warning">QC & Additional Notes</h6>
+                <p class="mb-0">{{ object.qc_and_additional_notes }}</p>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Долна лента с действия -->
+        <div class="card-footer bg-white text-end py-3">
+            <a href="{% url 'jobs:list_jobs' %}" class="btn btn-outline-secondary px-4 me-2">
+                <i class="bi bi-arrow-left"></i> Back to List
+            </a>
+            <a href="{% url 'jobs:update_job' object.pk %}" class="btn btn-primary px-4">
+                <i class="bi bi-pencil"></i> Edit Job
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

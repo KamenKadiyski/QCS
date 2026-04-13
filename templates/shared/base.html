@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset=“UTF-8“>
+    <meta name=“viewport“ content=“width=device-width, initial-scale=1.0“>
+    <title>{% block title %}QC Monitoring System{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    {% if user.is_authenticated %}
+        <span class="text-light me-2 small">Hello, {{ user.username }}</span>
+
+        <!-- Форма за сигурен Logout -->
+        <form action="{% url 'accounts:logout' %}" method="post" class="d-inline">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-outline-danger btn-sm">Logout</button>
+        </form>
+    {% else %}
+        <a href="{% url 'accounts:login' %}" class="btn btn-primary btn-sm">Login</a>
+    {% endif %}
+
+
+</head>
+<body class=“bg-light d-flex flex-column min-vh-100“>
+
+    {% include 'shared/navigation.html' %}
+
+    <main class=“flex-grow-1“>
+        {% block content %}
+
+        {% endblock %}
+    </main>
+
+    <footer class=“bg-white py-3 border-top mt-5“>
+        <div class=“container text-center“>
+            <span class=“text-muted small“>Copyright © 2025-2026 <a href="mailto:Kamen.Kadiyski@whatmoreuk.com" class="text-decoration-none">Kamen Kadiyski</a></span>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

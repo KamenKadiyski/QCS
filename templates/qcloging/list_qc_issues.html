@@ -1,0 +1,124 @@
+{% extends "shared/base.html" %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <!-- Лента с инструменти (Toolbar) -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-2">
+        <div>
+            <h2 class="text-dark mb-0 fw-bold">
+                <i class="bi bi-exclamation-triangle text-danger me-2"></i>{{ page_title }}
+            </h2>
+            <p class="text-muted mb-0 small">List of registered quality issues</p>
+        </div>
+        <div class="d-flex gap-2">
+            <a href="{% url 'qcloging:list_qc_logs' %}" class="btn btn-outline-secondary d-inline-flex align-items-center">
+                <i class="bi bi-house-door me-2"></i> Back to Lof list
+            </a>
+            <a href="{% url 'qcloging:add_qc_issue' %}" class="btn btn-danger d-inline-flex align-items-center shadow-sm">
+                <i class="bi bi-plus-lg me-2"></i> New Issue
+            </a>
+        </div>
+    </div>
+
+
+    <div class="card shadow-sm border-0 mb-4 bg-light">
+        <div class="card-body py-2">
+            <form method="get" class="row g-2 align-items-end">
+                <div class="col-auto">
+                    <label for="date_filter" class="form-label small fw-bold text-muted">Filter by date:</label>
+                    <input type="date" name="date_filter" id="date_filter" class="form-control form-control-sm" value="{{ request.GET.date_filter }}">
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary btn-sm px-3">Search</button>
+                    {% if request.GET.date_filter %}
+                        <a href="{% url 'qcloging:list_qc_issues' %}" class="btn btn-outline-secondary btn-sm px-3">Clear</a>
+                    {% endif %}
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Таблица -->
+    <div class="card shadow-sm border-0 overflow-hidden">
+        <div class="card-body p-0">
+            <div class="table-responsive text-nowrap">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-dark text-white small text-uppercase">
+                        <tr>
+                            <th class="ps-4 py-3">Date / Time</th>
+                            <th>Job Log</th>
+                            <th>Assigned to:</th>
+                            <th>Issue description</th>
+                            <th class="text-center">Status</th>
+                            <th class="text-center pe-4">To update</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for issue in object_list %}
+                        <tr class="issue-row">
+                            <td>
+                                <a href="{% url 'qcloging:update_qc_issue' issue.pk %}" class="issue-link ps-4">
+                                    <span class="d-block fw-bold text-dark">{{ issue.logged_at|date:"d.m.Y" }}</span>
+                                    <small class="text-muted">{{ issue.logged_at|date:"H:i" }}</small>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{% url 'qcloging:update_qc_issue' issue.pk %}" class="issue-link">
+                                    <span class="badge bg-secondary">{{ issue.job_log }}</span>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{% url 'qcloging:update_qc_issue' issue.pk %}" class="issue-link text-dark">
+                                    <i class="bi bi-person me-1"></i>{{ issue.assigned_to }}
+                                </a>
+                            </td>
+                            <td>
+
+                                <a href="{% url 'qcloging:update_qc_issue' issue.pk %}" class="issue-link text-truncate text-muted" style="max-width: 300px;">
+                                    {{ issue.issue_description|truncatechars:50 }}
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <a href="{% url 'qcloging:update_qc_issue' issue.pk %}" class="issue-link">
+                                    {% if issue.is_sorted %}
+                                        <span class="badge bg-success"><i class="bi bi-check-lg"></i> Fixed</span>
+                                    {% else %}
+                                        <span class="badge bg-warning text-dark"><i class="bi bi-clock"></i> Active</span>
+                                    {% endif %}
+                                </a>
+                            </td>
+                            <td class="text-center pe-4">
+                                <a href="{% url 'qcloging:update_qc_issue' issue.pk %}" class="issue-link text-primary">
+                                    <i class="bi bi-chevron-right"></i>
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-center py-5 text-muted">
+                                <i class="bi bi-info-circle fs-3 d-block mb-2"></i>
+                                There are no problems registered for the selected period.
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .table td { padding: 0 !important; }
+    .issue-link {
+        display: block;
+        padding: 0.85rem 0.5rem;
+        text-decoration: none !important;
+        color: inherit;
+        width: 100%;
+        height: 100%;
+    }
+    .issue-row:hover { background-color: rgba(220, 53, 69, 0.05) !important; }
+    .table thead th { font-size: 0.75rem; letter-spacing: 0.5px; border: none; }
+</style>
+{% endblock %}

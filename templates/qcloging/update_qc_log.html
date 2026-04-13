@@ -1,0 +1,57 @@
+{% extends "shared/base.html" %}
+
+{% block content %}
+<div class="container mt-5 pb-5">
+    <div class="card shadow-lg border-0 border-top border-warning border-4">
+        <div class="card-header bg-white p-3 d-flex justify-content-between align-items-center">
+            <h4 class="mb-0 text-dark fw-bold">
+                <i class="bi bi-pencil-square text-warning me-2"></i> QC log Editing
+            </h4>
+            <small class="text-muted">Created at: {{ object.logged_at|date:"d.m.Y H:i" }}</small>
+        </div>
+        <div class="card-body p-4 text-dark">
+            <form method="post" novalidate>
+                {% csrf_token %}
+                <div class="row g-3 mb-4 bg-light p-3 rounded border">
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">Job log</label>
+                        {{ form.job_log }}
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold">QC Inspector</label>
+                        {{ form.qc_inspector }}
+                    </div>
+                </div>
+                <h5 class="text-muted mb-4 border-bottom pb-2">Checklist</h5>
+                <div class="row">
+                    {% for field in form %}
+                        {% if field.field.widget.input_type == "checkbox" %}
+                        <div class="col-md-6 mb-3">
+                            <div class="form-check form-switch p-3 border rounded d-flex justify-content-between align-items-center shadow-sm bg-white h-100">
+                                <label class="form-check-label fw-semibold" for="{{ field.id_for_label }}">
+                                    {{ field.label }}
+                                </label>
+                                {{ field }}
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="d-flex justify-content-between mt-5">
+                    <a href="{% url 'qcloging:list_qc_logs' %}" class="btn btn-outline-secondary px-4">
+                        <i class="bi bi-arrow-left"></i> Back to list
+                    </a>
+                    <button type="submit" class="btn btn-warning btn-lg px-5 text-dark fw-bold shadow">
+                        Update log
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    .form-switch .form-check-input { width: 2.8em; height: 1.4em; }
+    .form-check-input:checked { background-color: #ffc107; border-color: #ffc107; }
+</style>
+{% endblock %}

@@ -1,0 +1,13 @@
+{
+    "code": "BMB-07",
+    "description": "Матрица за правоъгълни кутии 250ml - 4 гнезда",
+    "clamping_force": 1850,
+    "tool_width": 580.0,
+    "tool_height": 580.0,
+    "tool_thickness": 450.0,
+    "moving_platen_stroke": 480.0,
+    "injection_capacity": 180.0,
+    "ejecting_stroke": 150.0,
+    "number_of_ejector_cores": 2,
+    "is_in_use": false
+  }

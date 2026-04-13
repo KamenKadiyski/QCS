@@ -1,0 +1,153 @@
+{% extends "shared/base.html" %}
+
+{% block content %}
+<div class="container-fluid mt-4">
+    <!-- Toolbar & Title -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-4 gap-2">
+        <div>
+            <h2 class="text-dark mb-0 fw-bold">
+                <i class="bi bi-clipboard-data text-primary me-2"></i>{{ page_title }}
+            </h2>
+        </div>
+        <div class="d-flex gap-2">
+            <a href="{% url 'home' %}" class="btn btn-outline-secondary d-inline-flex align-items-center">
+                <i class="bi bi-house-door me-2"></i> Back to home
+            </a>
+            <a href="{% url 'qcloging:add_qc_log' %}" class="btn btn-success d-inline-flex align-items-center shadow-sm">
+                <i class="bi bi-plus-lg me-2"></i> New QC log
+            </a>
+             <a href="{% url 'qcloging:list_qc_issues' %}" class="btn btn-success d-inline-flex align-items-center shadow-sm">
+                 <i class="bi bi-folder2-open me-2"></i> QC Issues
+             </a>
+        </div>
+    </div>
+    <div class="card shadow-sm border-0 mb-4 bg-light">
+        <div class="card-body py-3">
+            <form method="get" class="row g-2 align-items-end">
+                <div class="col-auto">
+                    <label for="date_filter" class="form-label small fw-bold text-muted">Search by date:</label>
+                    <input type="date" name="date_filter" id="date_filter" class="form-control form-control-sm" value="{{ request.GET.date_filter }}">
+                </div>
+                <div class="col-auto">
+                    <button type="submit" class="btn btn-primary btn-sm px-3">
+                        <i class="bi bi-search me-1"></i> Filter
+                    </button>
+                    {% if request.GET.date_filter %}
+                    <a href="{% url 'qcloging:list_qc_logs' %}" class="btn btn-outline-danger btn-sm px-3">
+                        <i class="bi bi-x-circle me-1"></i> Clear filter
+                    </a>
+                    {% endif %}
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="card shadow-sm border-0 overflow-hidden">
+        <div class="card-body p-0">
+            <div class="table-responsive text-nowrap">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="bg-light text-secondary small text-uppercase">
+                        <tr>
+                            <th class="ps-4 py-3">Date/Time</th>
+                            <th>Job Log</th>
+                            <th>QC Inspector</th>
+                            <th class="text-center">'First of' sample</th>
+                            <th class="text-center">Same as 'First of' sample</th>
+                            <th class="text-center">Spec sheet</th>
+                            <th class="text-center">All labels are correct</th>
+                            <th class="text-center">Packing correctly</th>
+                            <th class="text-center">Operator's sheet signed</th>
+                            <th class="text-center">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for log in object_list %}
+                        <tr class="qc-row">
+                            <td>
+                                <a href="{% url 'qcloging:update_qc_log' log.pk %}" class="qc-link ps-4">
+                                    <span class="d-block fw-bold text-dark">{{ log.logged_at|date:"d.m.Y" }}</span>
+                                    <small class="text-muted">{{ log.logged_at|date:"H:i" }} ч.</small>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{% url 'qcloging:update_qc_log' log.pk %}" class="qc-link">
+                                    <span class="badge bg-light text-dark border px-2 py-1">{{ log.job_log }}</span>
+                                </a>
+                            </td>
+                            <td>
+                                <a href="{% url 'qcloging:update_qc_log' log.pk %}" class="qc-link text-dark">
+                                    {{ log.qc_inspector }}
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <a href="{% url 'qcloging:update_qc_log' log.pk %}" class="qc-link">
+                                    {{ log.first_of_sample_issued|yesno:"<i class='bi bi-check-circle-fill text-success'></i>,<i class='bi bi-dash text-muted'></i>"|safe }}
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <a href="{% url 'qcloging:update_qc_log' log.pk %}" class="qc-link">
+                                    {{ log.like_fos|yesno:"<i class='bi bi-check-circle-fill text-success'></i>,<i class='bi bi-dash text-muted'></i>"|safe }}
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <a href="{% url 'qcloging:update_qc_log' log.pk %}" class="qc-link">
+                                    {{ log.have_spec_sheet|yesno:"<i class='bi bi-check-circle-fill text-success'></i>,<i class='bi bi-dash text-muted'></i>"|safe }}
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <a href="{% url 'qcloging:update_qc_log' log.pk %}" class="qc-link">
+                                    {{ log.correct_labels|yesno:"<i class='bi bi-check-circle-fill text-success'></i>,<i class='bi bi-dash text-muted'></i>"|safe }}
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <a href="{% url 'qcloging:update_qc_log' log.pk %}" class="qc-link">
+                                    {{ log.packed_correctly|yesno:"<i class='bi bi-check-circle-fill text-success'></i>,<i class='bi bi-dash text-muted'></i>"|safe }}
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <a href="{% url 'qcloging:update_qc_log' log.pk %}" class="qc-link">
+                                    {{ log.operator_sheet_signed|yesno:"<i class='bi bi-check-circle-fill text-success'></i>,<i class='bi bi-dash text-muted'></i>"|safe }}
+                                </a>
+                            </td>
+                            <td class="text-center">
+                                <a href="{% url 'qcloging:update_qc_log' log.pk %}" class="qc-link pe-4">
+                                    {% if log.runs_with_flash %}
+                                        <span class="badge rounded-pill bg-warning text-dark small">Flash</span>
+                                    {% else %}
+                                        <span class="badge rounded-pill bg-success small px-3">OK</span>
+                                    {% endif %}
+                                </a>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="10" class="text-center py-5 text-muted">
+                                <i class="bi bi-inbox fs-2 d-block mb-2"></i>
+                                No QC logs yet!
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .table td { padding: 0 !important; }
+    .qc-link {
+        display: block;
+        padding: 0.85rem 0.5rem;
+        text-decoration: none !important;
+        color: inherit;
+        height: 100%;
+        width: 100%;
+    }
+    .qc-row:hover { background-color: rgba(13, 110, 253, 0.05) !important; }
+    .table thead th { padding: 1rem 0.5rem; font-size: 0.72rem; }
+    .bi-check-circle-fill { font-size: 1.1rem; }
+    .bi-dash { font-size: 1.1rem; }
+</style>
+
+<link rel="stylesheet" href="https://jsdelivr.net">
+{% endblock %}

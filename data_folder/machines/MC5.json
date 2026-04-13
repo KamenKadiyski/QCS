@@ -1,0 +1,15 @@
+{
+  "machine_number": "BMB-05",
+  "building": 1,
+  "machine_model": "eKW 55PI/3450 Hybrid",
+  "machine_description": "High-performance hybrid machine for packaging and technical molding.",
+  "max_clamping_force": 5500,
+  "max_tool_width": 920.0,
+  "max_tool_height": 920.0,
+  "max_tool_thickness": 900.0,
+  "max_moving_platen_stroke": 900.0,
+  "max_injection_capacity": 2150.0,
+  "max_ejecting_stroke": 250.0,
+  "number_of_ejector_cores": 6,
+  "compatible_tools": []
+}

@@ -1,0 +1,15 @@
+{
+    "machine_number": "BMB-03",
+    "building": 1,
+    "machine_model": "eKW 48PI/5500 Hybrid",
+    "machine_description": "Fast cycle hybrid machine for thin-wall packaging.",
+    "max_clamping_force": 5500,
+    "max_tool_width": 910.0,
+    "max_tool_height": 910.0,
+    "max_tool_thickness": 950.0,
+    "max_moving_platen_stroke": 850.0,
+    "max_injection_capacity": 3450.0,
+    "max_ejecting_stroke": 250.0,
+    "number_of_ejector_cores": 6,
+    "compatible_tools": []
+  }

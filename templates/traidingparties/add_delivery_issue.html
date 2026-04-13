@@ -1,0 +1,92 @@
+{% extends "shared/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12 mb-5">
+            <div class="card shadow border-0 border-start border-danger border-4">
+                <div class="card-header bg-white">
+                    <h3 class="mb-0 text-danger"><i class="fas fa-exclamation-triangle"></i> {{ page_title }}</h3>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post" novalidate class="row g-3">
+                        {% csrf_token %}
+                        {% if form.non_field_errors %}
+                            <div class="alert alert-danger">{{ form.non_field_errors }}</div>
+                        {% endif %}
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold small">{{ form.supplier.label }}</label>
+                            {{ form.supplier }}
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold small">{{ form.material.label }}</label>
+                            {{ form.material }}
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-bold small">{{ form.additive.label }}</label>
+                            {{ form.additive }}
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold small">{{ form.bach_number.label }}</label>
+                            {{ form.bach_number }}
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label fw-bold small">{{ form.issue_description.label }}</label>
+                            {{ form.issue_description }}
+                        </div>
+                        <div class="col-12 d-flex justify-content-between align-items-center mt-4">
+                            <a href="{% url 'home' %}" class="btn btn-outline-secondary">
+                                <i class="fas fa-home"></i> Home
+                            </a>
+                            <button type="submit" class="btn btn-danger px-4 shadow-sm">
+                                <i class="fas fa-save"></i> Log Issue
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-dark text-white">
+                    <h5 class="mb-0 small">Recent Delivery Issues</h5>
+                </div>
+                <div class="card-body p-0">
+                    <div class="table-responsive">
+                        <table class="table table-hover mb-0">
+                            <thead class="table-light">
+                                <tr class="small">
+                                    <th>Date</th>
+                                    <th>Supplier</th>
+                                    <th>Item (Material/Additive)</th>
+                                    <th>Batch</th>
+                                    <th>Description</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for issue in issues %}
+                                <tr>
+                                    <td class="small">{{ issue.issue_date|date:"d.m.Y H:i" }}</td>
+                                    <td class="fw-bold">{{ issue.supplier.name }}</td>
+                                    <td>
+                                        {% if issue.material %}
+                                            <span class="badge bg-primary"><i class="fas fa-box"></i> {{ issue.material.name }}</span>
+                                        {% else %}
+                                            <span class="badge bg-info text-dark"><i class="fas fa-flask"></i> {{ issue.additive.name }}</span>
+                                        {% endif %}
+                                    </td>
+                                    <td><code>{{ issue.bach_number|default:"-" }}</code></td>
+                                    <td class="small text-muted">{{ issue.issue_description|truncatechars:50 }}</td>
+                                </tr>
+                                {% empty %}
+                                <tr><td colspan="5" class="text-center py-3 text-muted">No issues logged yet.</td></tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{
+    "code": "BMB-03",
+    "description": "Матрица за кофи за боя 10L - 2 гнезда",
+    "clamping_force": 7200,
+    "tool_width": 980.0,
+    "tool_height": 920.0,
+    "tool_thickness": 780.0,
+    "moving_platen_stroke": 950.0,
+    "injection_capacity": 2800.0,
+    "ejecting_stroke": 350.0,
+    "number_of_ejector_cores": 6,
+    "is_in_use": false
+  }

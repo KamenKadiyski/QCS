@@ -1,0 +1,28 @@
+{% extends 'shared/../shared/base.html' %}
+{% block content %}
+    <h1>Job list</h1>
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for job in job_list %}
+        <div class="col">
+            <a href="{% url 'jobs:job_details' job.id %}" class="text-decoration-none h-100 d-block">
+                <div class="card h-100 border-0 shadow-sm transition-hover p-3">
+                    <div class="card-body text-center d-flex flex-column align-items-center justify-content-center">
+                        <div class="icon-box mb-3 {{ job.description }} bg-light rounded-circle d-flex align-items-center justify-content-center" style="width: 70px; height: 70px;">
+                            <i class="bi bi-gear-wide-connected"></i>
+                        </div>
+                        <h5 class="card-title fw-bold text-dark text-uppercase small mb-0">{{ job.job_code }}</h5>
+                        <h5 class="card-title fw-bold text-dark text-uppercase small mb-0">{{ job.description }}</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% empty %}
+            <p>No added jobs yet</p>
+        {% endfor %}
+    </div>
+
+
+
+
+
+{% endblock %}

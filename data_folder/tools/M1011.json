@@ -1,0 +1,13 @@
+{
+    "code": "BMB-01",
+    "description": "Матрица за кофички 500ml (съвместима с BMB eKW 35PI/2200)",
+    "clamping_force": 3200,
+    "tool_width": 720.0,
+    "tool_height": 720.0,
+    "tool_thickness": 600.0,
+    "moving_platen_stroke": 550.0,
+    "injection_capacity": 850.0,
+    "ejecting_stroke": 200.0,
+    "number_of_ejector_cores": 4,
+    "is_in_use": false
+  }

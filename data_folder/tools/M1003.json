@@ -1,0 +1,13 @@
+{
+    "code": "BMB-01",
+    "description": "Матрица за логистична каса (Е2) - 1 гнездо",
+    "clamping_force": 9500,
+    "tool_width": 1050.0,
+    "tool_height": 950.0,
+    "tool_thickness": 850.0,
+    "moving_platen_stroke": 1200.0,
+    "injection_capacity": 4200.0,
+    "ejecting_stroke": 450.0,
+    "number_of_ejector_cores": 8,
+    "is_in_use": false
+  }

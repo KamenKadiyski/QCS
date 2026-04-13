@@ -1,0 +1,60 @@
+{% extends "shared/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-lg border-0">
+        <div class="card-header bg-dark text-white p-3 d-flex justify-content-between align-items-center">
+            <h4 class="mb-0"><i class="bi bi-shield-check me-2"></i>New QC Inspection</h4>
+            <span class="badge bg-primary">{{ request.user.get_role_display }}</span>
+        </div>
+        <div class="card-body p-4 text-dark">
+            <form method="post" novalidate>
+                {% csrf_token %}
+                <div class="row g-3 mb-4">
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold text-secondary">Job log</label>
+                        {{ form.job_log }}
+                        {% if form.job_log.errors %}<div class="text-danger small">{{ form.job_log.errors }}</div>{% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label fw-bold text-secondary">QC Inspector</label>
+                        <!-- Показваме името от Employee модела -->
+                        <div class="input-group">
+                            <span class="input-group-text bg-light"><i class="bi bi-person-fill"></i></span>
+                            <input type="text" class="form-control bg-light"
+                                   value="{{ request.user.employee_profile.first_name }} {{ request.user.employee_profile.last_name }}"
+                                   readonly>
+                        </div>
+                        <small class="text-muted" style="font-size: 0.75rem;">The record will be associated with your profile.</small>
+                    </div>
+                </div>
+                <h5 class="text-muted mb-3 border-bottom pb-2">Checklist</h5>
+                <div class="row">
+                    {% for field in form %}
+                        {% if field.field.widget.input_type == "checkbox" %}
+                        <div class="col-md-6 mb-3">
+                            <div class="form-check form-switch p-3 border rounded bg-white d-flex justify-content-between align-items-center shadow-sm">
+                                <label class="form-check-label fw-semibold mb-0" for="{{ field.id_for_label }}">
+                                    {{ field.label }}
+                                </label>
+                                {{ field }}
+                            </div>
+                        </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+                <div class="d-flex justify-content-between mt-4">
+                    <a href="{% url 'qcloging:list_qc_logs' %}" class="btn btn-outline-secondary px-4">Cancel</a>
+                    <button type="submit" class="btn btn-primary btn-lg px-5 shadow">Save log</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+    .form-switch .form-check-input { width: 3em; height: 1.5em; cursor: pointer; }
+    .form-check-input:checked { background-color: #0d6efd; border-color: #0d6efd; }
+    .bg-light { background-color: #f8f9fa !important; }
+</style>
+{% endblock %}

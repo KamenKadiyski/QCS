@@ -1,0 +1,70 @@
+{% extends "shared/base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12 mb-5">
+            <div class="card shadow border-0">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0"><i class="fas fa-user-plus"></i> {{ page_title }}</h3>
+                </div>
+                <div class="card-body p-4">
+                    <form method="post" novalidate class="row g-3">
+                        {% csrf_token %}
+                        {% for field in form %}
+                            <div class="col-md-6">
+                                <label for="{{ field.id_for_label }}" class="form-label fw-bold small">
+                                    {{ field.label }}
+                                </label>
+                                {{ field }}
+                                {% if field.errors %}
+                                    <div class="text-danger small">{{ field.errors|striptags }}</div>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                        <div class="col-12 d-flex justify-content-between align-items-center mt-4">
+                             <a href="{% url 'traidingparties:add_delivery_issue' %}" class="btn btn-outline-secondary shadow-sm">
+                                <i class="fas fa-home"></i> Add Delivery Quality Issue
+                            </a>
+                            <a href="{% url 'home' %}" class="btn btn-outline-secondary shadow-sm">
+                                <i class="fas fa-home"></i> Home
+                            </a>
+                            <button type="submit" class="btn btn-primary px-4 shadow-sm">
+                                <i class="fas fa-save"></i> Save Supplier
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-light">
+                    <h5 class="mb-0 text-secondary">Existing Suppliers (Click to Edit)</h5>
+                </div>
+                <div class="card-body">
+                    <div class="list-group shadow-sm">
+                        {% for supplier in suppliers %}
+                            <a href="{% url 'traidingparties:update_supplier' supplier.id %}"
+                               class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+                                <div>
+                                    <i class="fas fa-truck text-muted me-2"></i>
+                                    <strong>{{ supplier.name }}</strong>
+                                    {% if supplier.contact_person %}
+                                        <span class="text-muted small ms-2">| {{ supplier.contact_person }}</span>
+                                    {% endif %}
+                                </div>
+                                <i class="fas fa-chevron-right text-light"></i>
+                            </a>
+                        {% empty %}
+                            <div class="list-group-item text-center py-3 text-muted">
+                                No suppliers registered yet.
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

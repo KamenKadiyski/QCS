@@ -1,0 +1,13 @@
+{
+    "code": "BMB-08",
+    "description": "Caps 38mm (IML) - 12 impression",
+    "clamping_force": 2100,
+    "tool_width": 620.0,
+    "tool_height": 550.0,
+    "tool_thickness": 480.0,
+    "moving_platen_stroke": 500.0,
+    "injection_capacity": 140.0,
+    "ejecting_stroke": 120.0,
+    "number_of_ejector_cores": 4,
+    "is_in_use": false
+  }

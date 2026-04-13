@@ -1,0 +1,121 @@
+{% extends 'shared/../shared/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-sm border-0">
+
+        <div class="card-header bg-dark text-white py-3">
+            <h4 class="mb-0">
+                <i class="bi bi-clipboard-plus me-2"></i> {{ page_title|default:"New Production Log" }}
+            </h4>
+        </div>
+
+        <div class="card-body p-4">
+            <form method="post" novalidate>
+                {% csrf_token %}
+
+                <div class="row">
+
+                    <div class="col-md-8 mb-4">
+                        <label class="form-label fw-bold"><i class="bi bi-briefcase me-1"></i> Select Job</label>
+                        {{ form.job }}
+                        <div class="form-text text-muted">Select which work order this log belongs to.</div>
+                    </div>
+                    <div class="col-md-4 mb-4">
+                        <label class="form-label fw-bold"><i class="bi bi-hash me-1"></i> Total Amount</label>
+                        {{ form.order_total_amount }}
+                    </div>
+                </div>
+
+                <hr class="my-4">
+                <h5 class="mb-4 text-primary"><i class="bi bi-gear-fill me-2"></i>Current Setup & Resources</h5>
+
+                <div class="row g-3">
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Machine</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light"><i class="bi bi-cpu"></i></span>
+                            {{ form.current_machine }}
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Tool / Mold</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light"><i class="bi bi-tools"></i></span>
+                            {{ form.current_tool }}
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Material in Use</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light"><i class="bi bi-box-seam"></i></span>
+                            {{ form.current_material }}
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label fw-bold">Additive in Use</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light"><i class="bi bi-droplet-half"></i></span>
+                            {{ form.current_additive }}
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="mt-4 p-3 bg-light rounded d-flex align-items-center">
+                    <div class="form-check form-switch mb-0">
+                        {{ form.is_complete }}
+                        <label class="form-check-label fw-bold ms-2" for="{{ form.is_complete.id_for_label }}">
+                            Mark as Complete
+                        </label>
+                    </div>
+                    <i class="bi bi-info-circle ms-auto text-muted" title="Log will be closed for further edits if marked complete."></i>
+                </div>
+
+
+                <div class="d-flex border-top mt-5 pt-4">
+                    <button class="btn btn-primary px-5 shadow-sm" type="submit">
+                        <i class="bi bi-save me-2"></i> Save Production Log
+                    </button>
+                    <a href="{% url 'jobs:list_jobs_logs' %}" class="btn btn-outline-secondary ms-auto px-4">
+                        Back to Logs
+                    </a>
+                </div>
+
+                {% if form.errors %}
+                <div class="alert alert-danger mt-4">
+                    <strong>Please fix the errors below:</strong>
+                    {{ form.non_field_errors }}
+                </div>
+                {% endif %}
+            </form>
+        </div>
+    </div>
+</div>
+
+<style>
+
+    select, input[type="number"], input[type="text"] {
+        display: block;
+        width: 100%;
+        padding: 0.375rem 0.75rem;
+        font-size: 1rem;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #212529;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #dee2e6;
+        border-radius: 0.375rem;
+        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+    }
+    input[type="checkbox"] {
+        width: 40px;
+        height: 20px;
+        cursor: pointer;
+    }
+</style>
+{% endblock %}

@@ -1,0 +1,119 @@
+{% extends "shared/base.html" %}
+
+{% block content %}
+<div class="container mt-5 pb-5 text-dark">
+    <div class="row justify-content-center">
+        <div class="col-lg-9">
+            <div class="card shadow-lg border-0 border-top border-warning border-4">
+                <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                    <h4 class="mb-0 text-dark fw-bold">
+                        <i class="bi bi-pencil-square text-warning me-2"></i>
+                        {{ page_title }}: {{ object.name }}
+                    </h4>
+                    <span class="badge bg-light text-dark border px-3 py-2 small">ID: #{{ object.pk }}</span>
+                </div>
+                <div class="card-body p-4 bg-white">
+                    <form method="post" novalidate>
+                        {% csrf_token %}
+                        {% if form.errors %}
+                        <div class="alert alert-danger shadow-sm mb-4">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                            Error while saving! Check the red boxes below.
+                        </div>
+                        {% endif %}
+                        <div class="mb-4">
+                            <h5 class="text-warning border-bottom pb-2 fw-bold mb-3 small text-uppercase">1. General data</h5>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Name</label>
+                                    {{ form.name }}
+                                    {% if form.name.errors %}<div class="text-danger small">{{ form.name.errors }}</div>{% endif %}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Supplier</label>
+                                    {{ form.supplier }}
+                                    {% if form.supplier.errors %}<div class="text-danger small">{{ form.supplier.errors }}</div>{% endif %}
+                                </div>
+                                <div class="col-md-12">
+                                    <label class="form-label fw-bold">Material type</label>
+                                    {{ form.type }}
+                                    {% if form.type.errors %}<div class="text-danger small">{{ form.type.errors }}</div>{% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <h5 class="text-warning border-bottom pb-2 fw-bold mb-3 small text-uppercase">2. Technical specification</h5>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">MFI / MFR (Flow Rate Index)</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light text-muted fw-bold">g/10min</span>
+                                        {{ form.mfi_mfr }}
+                                    </div>
+                                    {% if form.mfi_mfr.errors %}<div class="text-danger small">{{ form.mfi_mfr.errors }}</div>{% endif %}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Density</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text bg-light text-muted fw-bold">kg/m³</span>
+                                        {{ form.density }}
+                                    </div>
+                                    {% if form.density.errors %}<div class="text-danger small">{{ form.density.errors }}</div>{% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <h5 class="text-warning border-bottom pb-2 fw-bold mb-3 small text-uppercase">3. Ultimate properties</h5>
+                            <div class="row g-3">
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Endurance Class</label>
+                                    {{ form.product_durability }}
+                                    {% if form.product_durability.errors %}<div class="text-danger small">{{ form.product_durability.errors }}</div>{% endif %}
+                                </div>
+                                <div class="col-md-6">
+                                    <label class="form-label fw-bold">Optical effect</label>
+                                    {{ form.product_optic }}
+                                    {% if form.product_optic.errors %}<div class="text-danger small">{{ form.product_optic.errors }}</div>{% endif %}
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Additional notes</label>
+                            {{ form.additional_notes }}
+                            {% if form.additional_notes.errors %}<div class="text-danger small">{{ form.additional_notes.errors }}</div>{% endif %}
+                        </div>
+                        <hr class="my-4 opacity-25">
+                        <div class="d-flex flex-column flex-md-row justify-content-between gap-3">
+                            <a href="{% url 'materials:list_materials' %}" class="btn btn-outline-secondary px-4 order-2 order-md-1">
+                                <i class="bi bi-arrow-left"></i> Back to list
+                            </a>
+                            <button type="submit" class="btn btn-warning btn-lg px-5 text-dark fw-bold shadow order-1 order-md-2">
+                                <i class="bi bi-check2-circle me-2"></i> Update the material
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <p class="text-center text-muted mt-3 small">
+                <i class="bi bi-info-circle"></i> The changes will be reflected immediately in all recipes using this material.
+            </p>
+        </div>
+    </div>
+</div>
+
+<style>
+
+    .form-control:focus, .form-select:focus {
+        border-color: #ffc107;
+        box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.2);
+    }
+    textarea.form-control {
+        min-height: 120px;
+    }
+    .card {
+        border-radius: 12px;
+        overflow: hidden;
+    }
+    .input-group-text { font-size: 0.8rem; font-family: monospace; }
+</style>
+{% endblock %}

@@ -1,0 +1,15 @@
+{
+  "machine_number": "BMB-MULTI-01",
+  "building": 1,
+  "machine_model": "eKW 1150/12500 Hybrid 2K",
+  "machine_description": "Multi-material machine with 2 injection units and a rotary table for bi-component molding.",
+  "max_clamping_force": 11500,
+  "max_tool_width": 1250.0,
+  "max_tool_height": 1250.0,
+  "max_tool_thickness": 1400.0,
+  "max_moving_platen_stroke": 1450.0,
+  "max_injection_capacity": 12500.0,
+  "max_ejecting_stroke": 400.0,
+  "number_of_ejector_cores": 12,
+  "compatible_tools": []
+}

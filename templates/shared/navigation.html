@@ -1,0 +1,18 @@
+<!-- navigation.html -->
+<div class="container-fluid my-3">
+    <div class="d-flex flex-wrap gap-2 justify-content-start border-bottom pb-3">
+
+        {% for item in menu_items %}
+            <a href="{{ item.url|default:'#' }}" class="btn btn-light border d-flex align-items-center shadow-sm">
+                {% if item.icon %}
+                    <i class="bi bi-{{ item.icon }} {{ item.color }} me-2"></i>
+                {% endif %}
+                <span class="fw-bold">{{ item.title }}</span>
+            </a>
+        {% empty %}
+
+            <small class="text-muted">.</small>
+        {% endfor %}
+
+    </div>
+</div>

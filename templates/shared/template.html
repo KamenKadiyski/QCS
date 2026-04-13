@@ -1,0 +1,58 @@
+{% extends "shared/base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row mb-4">
+        <div class="col-md-8">
+            <h2 class="fw-bold">QC Monitoring System</h2>
+            <p class="text-muted">Hello, {{ user.username|default:"Guest" }}. Your access is limited to your system role.</p>
+        </div>
+        <div class="col-md-4 text-md-end">
+            <span class="badge bg-dark px-3 py-2">
+                Role:
+                {% if user.is_superuser %}
+                    Admin
+                {% else %}
+                    {% for group in user.groups.all %}
+                        {{ group.name }}{% if not forloop.last %}, {% endif %}
+                    {% empty %}
+                        External user
+                    {% endfor %}
+                {% endif %}
+            </span>
+            {% if user.is_authenticated %}
+                <div class="mt-2">
+                    <a href="{% url 'accounts:password_change' %}" class="btn btn-outline-primary btn-sm">
+                        Change Password
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for item in menu_items %}
+        <div class="col">
+            <a href="{{ item.url|default:'#'  }}" class="text-decoration-none h-100 d-block">
+                <div class="card h-100 border-0 shadow-sm transition-hover p-3">
+                    <div class="card-body text-center d-flex flex-column align-items-center justify-content-center">
+                        <div class="icon-box mb-3 {{ item.color }} bg-light rounded-circle d-flex align-items-center justify-content-center" style="width: 70px; height: 70px;">
+                            <i class="bi bi-{{ item.icon }} fs-1"></i>
+                        </div>
+                        <h5 class="card-title fw-bold text-dark text-uppercase small mb-0">{{ item.title }}</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<style>
+    .transition-hover { transition: all 0.3s ease; }
+    .transition-hover:hover { transform: translateY(-8px); box-shadow: 0 12px 25px rgba(0,0,0,0.1) !important; }
+    .icon-box { transition: background 0.3s ease; }
+    .transition-hover:hover .icon-box { background-color: #fff !important; }
+</style>
+{% endblock %}

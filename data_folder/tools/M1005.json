@@ -1,0 +1,13 @@
+{
+    "code": "BMB-05",
+    "description": "Матрица за кофички за кисело мляко 400g - 8 гнезда",
+    "clamping_force": 4200,
+    "tool_width": 780.0,
+    "tool_height": 780.0,
+    "tool_thickness": 550.0,
+    "moving_platen_stroke": 650.0,
+    "injection_capacity": 480.0,
+    "ejecting_stroke": 180.0,
+    "number_of_ejector_cores": 4,
+    "is_in_use": false
+  }
