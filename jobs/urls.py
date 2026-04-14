@@ -21,8 +21,9 @@ urlpatterns = [
     path('joblog/', include([
     path('create/', JobLogCreateView.as_view(), name='create_job_log'),
     path('list/', JobLogListView.as_view(), name='list_jobs_logs'),
+    path('update/<int:pk>/', JobLogUpdateView.as_view(), name='update_job_log'),
 
-])),
+    ])),
 
 
 ]

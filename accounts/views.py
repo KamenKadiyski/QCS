@@ -8,9 +8,22 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import RefreshToken
-
+from django.urls import reverse_lazy
 from .models import Employee, WorkPosition
 from .serializers import EmployeeSerializer, WorkPositionSerializer, ChangePasswordSerializer
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required, user_passes_test
+
+# Проверка дали потребителят е HR или Superuser
+def is_hr_or_admin(user):
+    return user.is_superuser or user.groups.filter(name='HR').exists()
+
+
+@login_required(login_url=reverse_lazy('accounts:login'))
+@user_passes_test(is_hr_or_admin, login_url=reverse_lazy('accounts:login'))
+def accounts_management_view(request):
+    return render(request, 'accounts/manage_employees.html')
+
 
 
 class WorkPositionViewSet(viewsets.ModelViewSet):
@@ -43,7 +56,7 @@ def home_view(request):
                 {'title': 'QC Logging', 'url': reverse('qcloging:list_qc_logs'), 'icon': 'journal-check', 'color': 'text-primary'},
                 {'title': 'Jobs', 'url': reverse('jobs:list_jobs'), 'icon': 'briefcase', 'color': 'text-primary'},
                 {'title': 'Trading Parties', 'url': reverse('traidingparties:add_supplier'), 'icon': 'building', 'color': 'text-primary'},
-                {'title': 'Accounts (HR)', 'url': 'http://localhost:5173', 'icon': 'person-gear', 'color': 'text-info'},
+                {'title': 'Accounts (HR)', 'url': reverse('accounts:manage_accounts'), 'icon': 'person-gear', 'color': 'text-info'},
                 {'title': 'Materials', 'url': reverse('materials:list_materials'), 'icon': 'box-seam', 'color': 'text-warning'},
                 {'title': 'Tools', 'url': reverse('equipment:tool-list'), 'icon': 'tools', 'color': 'text-warning'},
                 {'title': 'Machine', 'url': reverse('equipment:machine-list'), 'icon': 'machines', 'color': 'text-warning'},
@@ -69,7 +82,7 @@ def home_view(request):
 
         # 3. HR (Accounts CRUD)
         if 'HR' in user_groups:
-            menu_items.append({'title': 'Accounts (HR)', 'url': 'http://localhost:5173', 'icon': 'person-gear', 'color': 'text-info'})
+            menu_items.append({'title': 'Accounts (HR)', 'url': reverse('accounts:manage_accounts'), 'icon': 'person-gear', 'color': 'text-info'})
 
         # 4. PRODUCTION MANAGER (Materials & Equipment)
         if any(group.lower() == 'production manager' for group in user_groups):

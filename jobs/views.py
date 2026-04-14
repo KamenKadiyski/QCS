@@ -151,6 +151,19 @@ class JobLogListView(ListView):
 
         )
         return context
+
+
+
+from django.views.generic import UpdateView
+from .models import JobLog # увери се, че моделът се казва така
+
+class JobLogUpdateView(UpdateView):
+    model = JobLog
+    fields = '__all__' # или списък с полета: ['machine', 'employee', 'qty']
+    template_name = 'jobs/job_log_form.html' # можеш да ползваш същия шаблон като за create
+    success_url = reverse_lazy('jobs:list_jobs_logs')
+
+
 class ScrapReasonAddView(CreateView):
         model = ScrapReason
         fields = '__all__'

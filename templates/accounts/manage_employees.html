@@ -1,0 +1,194 @@
+{% extends "shared/base.html" %}
+
+{% block content %}
+<style>
+    :root { --hr-primary: #4e73df; --hr-success: #1cc88a; }
+    .card { border-radius: 12px; }
+    .hr-header { background: linear-gradient(135deg, #4e73df 0%, #224abe 100%); color: white; border-radius: 12px 12px 0 0 !important; }
+    .form-label { font-size: 0.85rem; letter-spacing: 0.5px; color: #4e5e7a; }
+    .list-group-item { border-left: 4px solid transparent; transition: all 0.2s; margin-bottom: 5px; border-radius: 8px !important; }
+    .list-group-item:hover { border-left: 4px solid var(--hr-primary); background-color: #f8f9fc; transform: translateX(5px); }
+    .status-pill { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; padding: 0.4em 0.8em; }
+    .avatar-circle { width: 40px; height: 40px; background: #eaecf4; display: flex; align-items: center; justify-content: center; border-radius: 50%; color: #4e73df; font-weight: bold; }
+    .scroll-area { max-height: 700px; overflow-y: auto; padding-right: 5px; }
+    /* Стилизация на scrollbar */
+    .scroll-area::-webkit-scrollbar { width: 5px; }
+    .scroll-area::-webkit-scrollbar-thumb { background: #d1d3e2; border-radius: 10px; }
+</style>
+
+<div class="container-fluid mt-4 px-4">
+    <div class="row g-4">
+
+        <!-- Лява колона на формата -->
+        <div class="col-xl-4 col-lg-5">
+            <div class="card shadow border-0 sticky-top" style="top: 20px;">
+                <div class="card-header hr-header p-3">
+                    <h5 class="mb-0"><i class="fas fa-user-plus me-2"></i>Добави нов служител</h5>
+                </div>
+                <div class="card-body p-4">
+                    <form id="employeeForm" class="row g-3">
+                        {% csrf_token %}
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Name</label>
+                            <input type="text" name="first_name" class="form-control form-control-lg fs-6" placeholder="Andy" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label class="form-label fw-bold">Last name</label>
+                            <input type="text" name="last_name" class="form-control form-control-lg fs-6" placeholder="Holt" required>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label fw-bold">CLOCK NUMBER</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light"><i class="fas fa-id-badge text-muted"></i></span>
+                                <input type="text" name="clock_number" class="form-control form-control-lg fs-6" placeholder="for example 1234" required>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <label class="form-label fw-bold">Work position</label>
+                            <select name="work_position" id="posSelect" class="form-select form-select-lg fs-6" required>
+                                <option value="">Choose position...</option>
+                            </select>
+                        </div>
+                        <div class="col-12 my-3">
+                            <div class="form-check form-switch p-3 bg-light rounded-3 border">
+                                <input class="form-check-input ms-0 me-3" type="checkbox" name="login_required" id="loginCheck">
+                                <label class="form-check-label fw-bold text-dark" for="loginCheck">
+                                    Need login?
+                                </label>
+                                <div class="form-text small">A username and password will be generated.</div>
+                            </div>
+                        </div>
+                        <div class="col-12 d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg shadow-sm fw-bold">
+                                <i class="fas fa-save me-2"></i>Save
+                            </button>
+                            <a href="{% url 'accounts:home' %}" class="btn btn-link btn-sm text-muted text-decoration-none">
+                                <i class="fas fa-chevron-left me-1"></i> Back to home
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Дясна колона със списъка на служителите -->
+        <div class="col-xl-8 col-lg-7">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0 text-dark fw-bold">
+                        <i class="fas fa-users me-2 text-primary"></i>List of employees
+                        <span class="badge bg-light text-primary ms-2" id="empCount">0</span>
+                    </h5>
+                    <button onclick="loadEmployees()" class="btn btn-sm btn-outline-primary rounded-pill px-3">
+                        <i class="fas fa-sync-alt me-1"></i> Refresh
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="scroll-area" id="employeeList">
+
+                        <div class="text-center py-5">
+                            <div class="spinner-border text-primary" role="status"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    const API_BASE = '/accounts/api/';
+
+    async function loadPositions() {
+        const select = document.getElementById('posSelect');
+        try {
+            const res = await fetch(`${API_BASE}positions/`);
+            const data = await res.json();
+            const positions = Array.isArray(data) ? data : data.results;
+            select.innerHTML = '<option value="">Select from the list...</option>';
+            positions.forEach(p => select.add(new Option(p.name, p.id)));
+        } catch (e) { select.innerHTML = '<option>Error!</option>'; }
+    }
+
+    async function loadEmployees() {
+        const listDiv = document.getElementById('employeeList');
+        try {
+            const res = await fetch(`${API_BASE}employees/`);
+            const data = await res.json();
+            const employees = Array.isArray(data) ? data : data.results;
+            document.getElementById('empCount').innerText = employees.length;
+
+            if (!employees || employees.length === 0) {
+                listDiv.innerHTML = '<div class="text-center py-5 text-muted">Няма регистрирани служители.</div>';
+                return;
+            }
+
+            listDiv.innerHTML = employees.map(emp => `
+                <div class="list-group-item list-group-item-action border shadow-sm p-3">
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <div class="avatar-circle">${emp.first_name[0]}${emp.last_name[0]}</div>
+                        </div>
+                        <div class="col">
+                            <h6 class="mb-0 fw-bold text-dark">${emp.first_name} ${emp.last_name}</h6>
+                            <small class="text-muted">
+                                <i class="fas fa-tag me-1"></i>Clock: <strong>${emp.clock_number}</strong>
+                                <span class="mx-2">|</span>
+                                <i class="fas fa-briefcase me-1"></i>${emp.work_position_name}
+                            </small>
+                        </div>
+                        <div class="col-auto text-end">
+                            ${emp.username ?
+                                `<span class="badge bg-success-soft text-success status-pill me-2 border border-success">
+                                    <i class="fas fa-check-circle me-1"></i>${emp.username}
+                                 </span>` :
+                                `<span class="badge bg-light text-muted status-pill border">Без акаунт</span>`
+                            }
+                            <div class="small fw-bold text-primary mt-1" style="font-size: 0.65rem;">${emp.role || ''}</div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+        } catch (e) { listDiv.innerHTML = '<div class="alert alert-danger">API connection error.</div>'; }
+    }
+
+    document.getElementById('employeeForm').onsubmit = async (e) => {
+        e.preventDefault();
+        const fd = new FormData(e.target);
+        const payload = {
+            first_name: fd.get('first_name'),
+            last_name: fd.get('last_name'),
+            clock_number: fd.get('clock_number'),
+            work_position: parseInt(fd.get('work_position')),
+            login_required: fd.get('login_required') === 'on'
+        };
+
+        const res = await fetch(`${API_BASE}employees/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            },
+            body: JSON.stringify(payload)
+        });
+
+        if (res.ok) {
+            e.target.reset();
+            loadEmployees();
+            // Опционално: SweetAlert или Toast съобщение
+        } else {
+            const err = await res.json();
+            alert('Грешка: ' + JSON.stringify(err));
+        }
+    };
+
+    window.addEventListener('DOMContentLoaded', () => {
+        loadPositions();
+        loadEmployees();
+    });
+</script>
+
+<style>
+    .bg-success-soft { background-color: #e8f5e9; }
+</style>
+{% endblock %}

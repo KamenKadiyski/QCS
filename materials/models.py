@@ -23,7 +23,7 @@ class Material(models.Model):
     supplier=models.ForeignKey('traidingparties.Supplier', on_delete=models.CASCADE, related_name='materials')
     type=models.CharField(max_length=20,choices=MATERIAL_TYPES)
     mfi_mfr=models.CharField(max_length=3)
-    density=models.PositiveSmallIntegerField()
+    density=models.DecimalField(max_digits=4,decimal_places=3)
     product_durability=models.CharField(max_length=10,choices=DurabilityGrade.choices)
     product_optic=models.CharField(max_length=10,choices=OPTICAL_PROPERTIES)
     additional_notes = models.TextField()

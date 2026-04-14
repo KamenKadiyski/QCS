@@ -2,6 +2,17 @@
 {% load static %}
 
 {% block content %}
+<style>
+    /* Прави целия ред да изглежда кликаем и добавя лек ефект при посочване */
+    .clickable-row {
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+    }
+    .clickable-row:hover {
+        background-color: rgba(0, 123, 255, 0.05) !important;
+    }
+</style>
+
 <div class="container mt-4">
     <!-- Заглавие и Контролни бутони -->
     <div class="d-flex justify-content-between align-items-center mb-4">
@@ -34,7 +45,8 @@
             </thead>
             <tbody>
                 {% for log in joblog_list %}
-                <tr>
+                <!-- Добавен клас clickable-row и data-href атрибут за линка -->
+                <tr class="clickable-row" data-href="{% url 'jobs:update_job_log' log.id %}">
                     <td><small class="text-muted">{{ log.date_and_time|date:"d.m.Y H:i" }}</small></td>
                     <td><strong>{{ log.job }}</strong></td>
                     <td>
@@ -65,4 +77,17 @@
         </table>
     </div>
 </div>
+
+<!-- JavaScript за управление на кликовете върху редовете -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const rows = document.querySelectorAll(".clickable-row");
+        rows.forEach(row => {
+            row.addEventListener("click", function() {
+                // Пренасочва към URL-а, записан в data-href
+                window.location.href = this.dataset.href;
+            });
+        });
+    });
+</script>
 {% endblock %}

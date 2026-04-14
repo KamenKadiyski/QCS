@@ -4,7 +4,7 @@ from django.contrib.auth import views as auth_views
 from rest_framework.routers import DefaultRouter
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
-from .views import home_view, WorkPositionViewSet, EmployeeViewSet, LogoutView, ChangePasswordView
+from .views import home_view, WorkPositionViewSet, EmployeeViewSet, LogoutView, ChangePasswordView, accounts_management_view
 app_name = 'accounts'
 
 router = DefaultRouter()
@@ -13,6 +13,7 @@ router.register(r'employees', EmployeeViewSet)
 
 urlpatterns = [
     path('', home_view, name='home'),
+    path('manage/', accounts_management_view, name='manage_accounts'),
     path('api/', include(router.urls)),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
