@@ -114,25 +114,27 @@ class JobDetailsView(DetailView):
         return context
 
 
-
 class JobLogCreateView(CreateView):
-        model = JobLog
+    model = JobLog
+    template_name = 'jobs/create_job_log.html'
+    form_class = AddToJobLogForm
+    success_url = reverse_lazy('jobs:list_jobs_logs')
+    page_title = 'Create Job Log'
 
-        template_name = 'jobs/create_job_log.html'
-        form_class = AddToJobLogForm
-        success_url = reverse_lazy('jobs:list_jobs_logs')
-        page_title = 'Create Job Log'
+    def post(self, request, *args, **kwargs):
+        # Ако е натиснат бутона за опресняване
+        if "_refresh" in request.POST:
+            self.object = None  # Фикс за грешката: инициализираме обекта като празен
+            form = self.get_form()
+            return self.render_to_response(self.get_context_data(form=form))
 
+        # Стандартна логика за запис
+        return super().post(request, *args, **kwargs)
 
-        def get_context_data(self, **kwargs):
-            context = super().get_context_data(**kwargs)
-            context.update(
-                {
-                    'page_title': self.page_title,
-
-                }
-            )
-            return context
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['page_title'] = self.page_title
+        return context
 
 
 class JobLogListView(ListView):

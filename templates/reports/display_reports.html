@@ -1,0 +1,51 @@
+{% extends "shared/base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>{{ report.name }}</h2>
+
+    <!-- Секция за Графика -->
+    {% if chart_values %}
+    <div class="card mb-4 shadow-sm">
+        <div class="card-body">
+            <canvas id="reportChart" style="max-height: 400px;"></canvas>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- Секция за Таблица -->
+    <div class="table-responsive">
+        <table class="table table-striped table-hover border">
+            <thead class="table-dark">
+                <tr>
+                    {% for key in data.0.keys %} <th>{{ key|title }}</th> {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for row in data %}
+                <tr>
+                    {% for value in row.values %} <td>{{ value }}</td> {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<script src="https://jsdelivr.net"></script>
+<script>
+    const ctx = document.getElementById('reportChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: {{ chart_labels|safe }},
+            datasets: [{
+                label: 'Стойност',
+                data: {{ chart_values|safe }},
+                backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        }
+    });
+</script>
+{% endblock %}

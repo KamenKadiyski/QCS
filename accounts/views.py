@@ -53,6 +53,7 @@ def home_view(request):
         # АКО Е SUPERUSER
         if user.is_superuser:
             menu_items.extend([
+                {'title': 'Reports', 'url': reverse('reports:report_list'),  'icon': 'clipboard-data','color': 'text-secondary'},
                 {'title': 'QC Logging', 'url': reverse('qcloging:list_qc_logs'), 'icon': 'journal-check', 'color': 'text-primary'},
                 {'title': 'Jobs', 'url': reverse('jobs:list_jobs'), 'icon': 'briefcase', 'color': 'text-primary'},
                 {'title': 'Trading Parties', 'url': reverse('traidingparties:add_supplier'), 'icon': 'building', 'color': 'text-primary'},

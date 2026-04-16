@@ -46,6 +46,8 @@ class Machine(models.Model):
     max_ejecting_stroke=models.FloatField(validators=[min_value_validator])
     number_of_ejector_cores=models.IntegerField(validators=[min_value_validator])
     compatible_tools=models.ManyToManyField(Tool, related_name='compatible_machines')
+    is_in_use = models.BooleanField(default=False)
+
     class Meta:
         constraints = [
             models.UniqueConstraint(fields=['machine_number', 'building'], name='machine_code')

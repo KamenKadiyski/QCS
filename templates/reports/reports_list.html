@@ -1,0 +1,42 @@
+{% extends 'shared/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row mb-4">
+        <div class="col">
+            <h1 class="display-5">Available Reports</h1>
+            <p class="text-muted">Select a report from the list below to set parameters.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        {% for report in reports %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow-sm border-primary">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">{{ report.name }}</h5>
+                    <p class="card-text text-secondary">
+                        {% if report.description %}
+                            {{ report.description|truncatewords:20 }}
+                        {% else %}
+                            No description provided for this report.
+                        {% endif %}
+                    </p>
+                </div>
+                <div class="card-footer bg-transparent border-0 pb-3">
+                    <a href="{% url 'reports:report_view' report.slug %}" class="btn btn-outline-primary w-100">
+                        Open Report
+                    </a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center">
+            <div class="alert alert-info">
+                There are currently no active report configurations.
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
