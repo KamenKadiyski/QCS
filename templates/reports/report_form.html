@@ -47,6 +47,15 @@
         </div>
     {% endfor %}
 
-    <button class="btn btn-primary">Load data</button>
+     <div class="mt-4 d-flex gap-2">
+        <button type="submit" class="btn btn-primary px-4">
+            <i class="bi bi-play-fill me-1"></i> Load data
+        </button>
+
+        <a href="{% url 'jobs:list_jobs_logs' %}" class="btn btn-outline-secondary px-4">
+            <i class="bi bi-house-door me-1"></i> Back to Home
+        </a>
+    </div>
 </form>
+
 {% endblock %}

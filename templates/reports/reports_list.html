@@ -2,37 +2,43 @@
 
 {% block content %}
 <div class="container mt-5">
-    <div class="row mb-4">
-        <div class="col">
-            <h1 class="display-5">Available Reports</h1>
+    <div class="row mb-4 align-items-center">
+        <div class="col-md-8">
+            <h1 class="display-5 fw-bold text-dark">Available Reports</h1>
             <p class="text-muted">Select a report from the list below to set parameters.</p>
+        </div>
+        <!-- БУТОН ЗА ВРЪЩАНЕ -->
+        <div class="col-md-4 text-md-end">
+            <a href="{% url 'accounts:home' %}" class="btn btn-outline-secondary px-4 shadow-sm">
+                <i class="bi bi-house-door me-2"></i>Dashboard
+            </a>
         </div>
     </div>
 
     <div class="row">
         {% for report in reports %}
         <div class="col-md-4 mb-4">
-            <div class="card h-100 shadow-sm border-primary">
+            <div class="card h-100 shadow-sm border-0 border-top border-danger border-4">
                 <div class="card-body">
-                    <h5 class="card-title text-primary">{{ report.name }}</h5>
-                    <p class="card-text text-secondary">
+                    <h5 class="card-title fw-bold text-dark">{{ report.name }}</h5>
+                    <p class="card-text text-secondary small">
                         {% if report.description %}
                             {{ report.description|truncatewords:20 }}
                         {% else %}
-                            No description provided for this report.
+                            Detailed production analytics and scrap monitoring.
                         {% endif %}
                     </p>
                 </div>
-                <div class="card-footer bg-transparent border-0 pb-3">
-                    <a href="{% url 'reports:report_view' report.slug %}" class="btn btn-outline-primary w-100">
-                        Open Report
+                <div class="card-footer bg-white border-0 pb-3">
+                    <a href="{% url 'reports:report_view' report.slug %}" class="btn btn-danger w-100 fw-bold rounded-0">
+                        OPEN REPORT
                     </a>
                 </div>
             </div>
         </div>
         {% empty %}
         <div class="col-12 text-center">
-            <div class="alert alert-info">
+            <div class="alert alert-light border-start border-danger border-4">
                 There are currently no active report configurations.
             </div>
         </div>

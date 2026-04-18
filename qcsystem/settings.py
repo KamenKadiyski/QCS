@@ -50,7 +50,7 @@ CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
-    "qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net"
+    "https://qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net"
 ]
 CORS_ALLOW_HEADERS = [
     "accept",
