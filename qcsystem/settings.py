@@ -34,13 +34,29 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-default-exam-key-123')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost','qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net']
-CSRF_TRUSTED_ORIGINS = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
-    "https://azurewebsites.net",
-    'https://qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net',
-]
+
+if os.environ.get('AZURE_WEBAPP_NAME'):
+
+    DEBUG = False
+    ALLOWED_HOSTS = ['qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net']
+    CSRF_TRUSTED_ORIGINS = [
+        "https://azurewebsites.net",
+        'https://qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net',]
+else:
+
+    ALLOWED_HOSTS = ['localhost', '127.0.0.1']
+    CSRF_TRUSTED_ORIGINS = [
+        "http://localhost:8000",
+        "http://127.0.0.1:8000",
+        ]
+
+#ALLOWED_HOSTS = ['127.0.0.1', 'localhost','qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net']
+#CSRF_TRUSTED_ORIGINS = [
+#    "http://localhost:5173",
+#    "http://127.0.0.1:5173",
+#    "https://azurewebsites.net",
+#    'https://qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net',
+#]
 CSRF_COOKIE_HTTPONLY = False
 CSRF_COOKIE_SAMESITE = 'Lax'
 SESSION_COOKIE_SAMESITE = 'Lax'
@@ -165,8 +181,8 @@ DATABASES = {
         'OPTIONS': dict(parse_qsl(tmpPostgres.query)),
     }
 }
-# Redis Configuratio
-REDIS_URL = os.getenv('REDIS_STRING', 'redis://localhost:6379/0')
+
+REDIS_URL = os.getenv('REDIS_STRING',)
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
