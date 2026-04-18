@@ -4,6 +4,7 @@
 
 🌐 **Live Demo (Azure):** [https://qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net](https://qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net)
 
+**QCSystem** е базиран на реална работа среда, с реални работни формуляри. Данните са реални и са взети като спецификации от производители и доставчици.
 ---
 ## 🚀 Основни модули
 
