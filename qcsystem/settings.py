@@ -34,21 +34,29 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-default-exam-key-123')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+import os
 
 if os.environ.get('AZURE_WEBAPP_NAME'):
 
     DEBUG = False
-    ALLOWED_HOSTS = ['qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net']
+
+    ALLOWED_HOSTS = [
+        'qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net',
+        '.azurewebsites.net',
+    ]
+
     CSRF_TRUSTED_ORIGINS = [
-        "https://azurewebsites.net",
-        'https://qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net',]
+        'https://*.azurewebsites.net',
+        'https://qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net',
+    ]
 else:
 
+    DEBUG = True
     ALLOWED_HOSTS = ['localhost', '127.0.0.1']
     CSRF_TRUSTED_ORIGINS = [
         "http://localhost:8000",
         "http://127.0.0.1:8000",
-        ]
+    ]
 
 #ALLOWED_HOSTS = ['127.0.0.1', 'localhost','qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net']
 #CSRF_TRUSTED_ORIGINS = [
