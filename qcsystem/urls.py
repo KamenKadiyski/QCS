@@ -14,13 +14,13 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
-from django.urls import path
+
 
 from django.contrib import admin
 from django.urls import path, include
 
 from accounts.views import home_view
+from shared.views import custom_error_404, custom_error_500
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -35,3 +35,6 @@ urlpatterns = [
 
 
 ]
+
+handler404 = custom_error_404
+handler500 = custom_error_500

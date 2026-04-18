@@ -1,0 +1,13 @@
+{
+    "code": "1228",
+    "description": "32 litter box light version MK2 (Standard Opening)",
+    "clamping_force": 2100,
+    "tool_width": 880.0,
+    "tool_height": 610.0,
+    "tool_thickness": 450.0,
+    "moving_platen_stroke": 380.0,
+    "injection_capacity": 540.0,
+    "ejecting_stroke": 280.0,
+    "number_of_ejector_cores": 8,
+    "is_in_use": false
+}

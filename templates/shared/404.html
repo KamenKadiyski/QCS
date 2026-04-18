@@ -1,0 +1,36 @@
+{% extends 'shared/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8 text-center">
+            <div class="py-5">
+
+                <div class="mb-4">
+                    <i class="bi bi-search text-danger" style="font-size: 5rem;"></i>
+                </div>
+
+                <h1 class="display-4 fw-bold text-dark uppercase" style="letter-spacing: -1px;">
+                    ITEM NOT LOCATED
+                </h1>
+
+                <div class="bg-danger mx-auto mb-4" style="height: 4px; width: 60px;"></div>
+
+                <p class="lead text-secondary mb-5">
+                    The production record, machine data, or tool specification you are looking for <br>
+                    is currently unavailable or has been moved within the system.
+                </p>
+
+                <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                    <a href="{% url 'jobs:list_jobs_logs' %}" class="btn btn-danger btn-lg px-5 rounded-0 fw-bold shadow-sm">
+                        RETURN TO DASHBOARD
+                    </a>
+                    <a href="javascript:history.back()" class="btn btn-outline-dark btn-lg px-5 rounded-0 fw-bold">
+                        PREVIOUS PAGE
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

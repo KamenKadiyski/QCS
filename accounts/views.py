@@ -1,5 +1,7 @@
 from django.contrib.auth import update_session_auth_hash
+from django.contrib.auth.decorators import login_required, user_passes_test
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.urls.base import reverse
 from rest_framework import viewsets, permissions
 from rest_framework.authentication import SessionAuthentication
@@ -8,11 +10,10 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import RefreshToken
-from django.urls import reverse_lazy
+
 from .models import Employee, WorkPosition
 from .serializers import EmployeeSerializer, WorkPositionSerializer, ChangePasswordSerializer
-from django.shortcuts import render
-from django.contrib.auth.decorators import login_required, user_passes_test
+
 
 # Проверка дали потребителят е HR или Superuser
 def is_hr_or_admin(user):
@@ -44,7 +45,7 @@ def home_view(request):
 
     # 1. ОБЩОДОСТЪПНИ
     if not user.is_authenticated or user.role!='hr':
-        menu_items.append({'title': 'Add to scrap log', 'url': reverse('jobs:add_scrap_log'),'icon': 'recycle', 'color': 'text-success'})
+        menu_items.append({'title': 'Add to scrap log','url': reverse('jobs:add_scrap_log'),'icon': 'bi bi-recycle','color': 'text-success'})
 
     if user.is_authenticated:
 
@@ -53,17 +54,18 @@ def home_view(request):
         # АКО Е SUPERUSER
         if user.is_superuser:
             menu_items.extend([
-                {'title': 'Reports', 'url': reverse('reports:report_list'),  'icon': 'clipboard-data','color': 'text-secondary'},
-                {'title': 'QC Logging', 'url': reverse('qcloging:list_qc_logs'), 'icon': 'journal-check', 'color': 'text-primary'},
-                {'title': 'Jobs', 'url': reverse('jobs:list_jobs'), 'icon': 'briefcase', 'color': 'text-primary'},
-                {'title': 'Trading Parties', 'url': reverse('traidingparties:add_supplier'), 'icon': 'building', 'color': 'text-primary'},
-                {'title': 'Accounts (HR)', 'url': reverse('accounts:manage_accounts'), 'icon': 'person-gear', 'color': 'text-info'},
-                {'title': 'Materials', 'url': reverse('materials:list_materials'), 'icon': 'box-seam', 'color': 'text-warning'},
-                {'title': 'Tools', 'url': reverse('equipment:tool-list'), 'icon': 'tools', 'color': 'text-warning'},
-                {'title': 'Machine', 'url': reverse('equipment:machine-list'), 'icon': 'machines', 'color': 'text-warning'},
-                {'title': 'Създай QC Issue', 'url': reverse('qcloging:add_qc_issue'), 'icon': 'exclamation-octagon', 'color': 'text-danger'},
-                {'title': 'Job Log', 'url': reverse('jobs:list_jobs_logs'), 'icon': 'clipboard-data', 'color': 'text-secondary'},
-                {'title': 'Scrap Reason', 'url': reverse('jobs:add_scrap_reason'), 'icon': 'clipboard-data','color': 'text-secondary'},
+
+                {'title': 'Scrap Reason', 'url': reverse('jobs:add_scrap_reason'), 'icon': 'bi bi-recycle','color': 'text-danger'},
+                {'title': 'QC Logging', 'url': reverse('qcloging:list_qc_logs'), 'icon': 'bi bi-clipboard2-check-fill','color': 'text-primary'},
+                {'title': 'Create QC Issue', 'url': reverse('qcloging:add_qc_issue'),'icon': 'bi bi-exclamation-triangle-fill', 'color': 'text-danger'},
+                {'title': 'Jobs', 'url': reverse('jobs:list_jobs'), 'icon': 'bi bi-stack', 'color': 'text-primary'},
+                {'title': 'Job Log', 'url': reverse('jobs:list_jobs_logs'), 'icon': 'bi bi-stopwatch','color': 'text-secondary'},
+                {'title': 'Trading Parties', 'url': reverse('traidingparties:add_supplier'), 'icon': 'bi bi-truck','color': 'text-primary'},
+                {'title': 'Accounts (HR)', 'url': reverse('accounts:manage_accounts'), 'icon': 'bi bi-people-fill','color': 'text-info'},
+                {'title': 'Materials', 'url': reverse('materials:list_materials'), 'icon': 'bi bi-moisture','color': 'text-warning'},
+                {'title': 'Tools', 'url': reverse('equipment:tool-list'), 'icon': 'bi bi-grid-3x3-gap-fill','color': 'text-warning'},
+                {'title': 'Machine', 'url': reverse('equipment:machine-list'), 'icon': 'bi bi-cpu-fill','color': 'text-warning'},
+                {'title': 'Reports', 'url': reverse('reports:report_list'), 'icon': 'bi bi-graph-up-arrow','color': 'text-secondary'},
             ])
 
             return render(request, 'shared/template.html', {'menu_items': menu_items})
@@ -71,11 +73,12 @@ def home_view(request):
         # 2. QC МЕНИДЖЪР
         if 'QC Manager' in user_groups:
             menu_items.extend([
-                {'title': 'QC Logging', 'url': reverse('qcloging:list_qc_logs'), 'icon': 'journal-check', 'color': 'text-primary'},
-                {'title': 'Jobs', 'url': reverse('jobs:list_jobs'), 'icon': 'briefcase', 'color': 'text-primary'},
-                {'title': 'Trading Parties', 'url': reverse('traidingparties:add_supplier'), 'icon': 'building', 'color': 'text-primary'},
-                {'title': 'Scrap Reason', 'url': reverse('jobs:add_scrap_reason'), 'icon': 'clipboard-data','color': 'text-secondary'},
-                {'title': 'Materials', 'url': reverse('materials:list_materials'), 'icon': 'box-seam','color': 'text-warning'},
+                {'title': 'Scrap Reason', 'url': reverse('jobs:add_scrap_reason'), 'icon': 'bi bi-recycle','color': 'text-danger'},
+                {'title': 'QC Logging', 'url': reverse('qcloging:list_qc_logs'), 'icon': 'bi bi-clipboard2-check-fill','color': 'text-primary'},
+                {'title': 'Jobs', 'url': reverse('jobs:list_jobs'), 'icon': 'bi bi-stack', 'color': 'text-primary'},
+                {'title': 'Trading Parties', 'url': reverse('traidingparties:add_supplier'), 'icon': 'bi bi-truck','color': 'text-primary'},
+                {'title': 'Materials', 'url': reverse('materials:list_materials'), 'icon': 'bi bi-moisture','color': 'text-warning'},
+                {'title': 'Reports', 'url': reverse('reports:report_list'), 'icon': 'bi bi-graph-up-arrow','color': 'text-secondary'},
             ])
 
 
@@ -83,28 +86,29 @@ def home_view(request):
 
         # 3. HR (Accounts CRUD)
         if 'HR' in user_groups:
-            menu_items.append({'title': 'Accounts (HR)', 'url': reverse('accounts:manage_accounts'), 'icon': 'person-gear', 'color': 'text-info'})
+            menu_items.append({'title': 'Accounts (HR)', 'url': reverse('accounts:manage_accounts'), 'icon': 'bi bi-people-fill','color': 'text-info'})
 
         # 4. PRODUCTION MANAGER (Materials & Equipment)
         if any(group.lower() == 'production manager' for group in user_groups):
             menu_items.extend([
-                {'title': 'Materials', 'url': reverse('materials:list_materials'), 'icon': 'box-seam', 'color': 'text-warning'},
-                {'title': 'Tools', 'url': reverse('equipment:tool-list'), 'icon': 'tools', 'color': 'text-warning'},
-                {'title': 'Machine', 'url': reverse('equipment:machine-list'), 'icon': 'machines','color': 'text-warning'},
-                {'title': 'Trading Parties', 'url': reverse('traidingparties:add_supplier'), 'icon': 'building','color': 'text-primary'},
+                {'title': 'Materials', 'url': reverse('materials:list_materials'), 'icon': 'bi bi-moisture','color': 'text-warning'},
+                {'title': 'Tools', 'url': reverse('equipment:tool-list'), 'icon': 'bi bi-grid-3x3-gap-fill','color': 'text-warning'},
+                {'title': 'Machine', 'url': reverse('equipment:machine-list'), 'icon': 'bi bi-cpu-fill','color': 'text-warning'},
+                {'title': 'Trading Parties', 'url': reverse('traidingparties:add_supplier'), 'icon': 'bi bi-truck','color': 'text-primary'},
+                {'title': 'Reports', 'url': reverse('reports:report_list'), 'icon': 'bi bi-graph-up-arrow','color': 'text-secondary'},
             ])
 
         # 5. SUPERVISOR, QC INSPECTOR, TEAM LEADER (QC Issue Creation)
         special_roles = ['Supervisor', 'Supervisors', 'QC Inspector', 'Team Leader']
         if any(role in user_groups for role in special_roles):
             menu_items.extend([
-                {'title': 'Създай QC Issue', 'url': reverse('qcloging:add_qc_issue'), 'icon': 'exclamation-octagon', 'color': 'text-danger'},
-                {'title': 'Job Log', 'url': reverse('jobs:list_jobs_logs'), 'icon': 'clipboard-data', 'color': 'text-secondary'},
-                {'title': 'QC Logging', 'url': reverse('qcloging:list_qc_logs'), 'icon': 'journal-check','color': 'text-primary'},
+                {'title': 'Create QC Issue', 'url': reverse('qcloging:add_qc_issue'),'icon': 'bi bi-exclamation-triangle-fill', 'color': 'text-danger'},
+                {'title': 'Job Log', 'url': reverse('jobs:list_jobs_logs'), 'icon': 'bi bi-stopwatch','color': 'text-secondary'},
+                {'title': 'QC Logging', 'url': reverse('qcloging:list_qc_logs'), 'icon': 'bi bi-clipboard2-check-fill','color': 'text-primary'},
             ])
         # 6. COLOURMEN (JobLog & Скрап)
         if 'Colourmen' in user_groups:
-            menu_items.append({'title': 'Job Log', 'url': reverse('jobs:list_jobs_logs'), 'icon': 'clipboard-data', 'color': 'text-secondary'})
+            menu_items.append({'title': 'Job Log', 'url': reverse('jobs:list_jobs_logs'), 'icon': 'bi bi-stopwatch','color': 'text-secondary'},)
 
     return render(request, 'shared/template.html', {'menu_items': menu_items})
 

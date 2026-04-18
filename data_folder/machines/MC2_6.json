@@ -1,0 +1,15 @@
+{
+    "machine_number": "2",
+    "building": 3,
+    "machine_model": "BMB eKW 700",
+    "machine_description": "High-performance hybrid machine for packaging (lids). Energy efficient with high-speed injection.",
+    "max_clamping_force": 7000,
+    "max_tool_width": 1150.0,
+    "max_tool_height": 950.0,
+    "max_tool_thickness": 1000.0,
+    "max_moving_platen_stroke": 950.0,
+    "max_injection_capacity": 2100.0,
+    "max_ejecting_stroke": 350.0,
+    "number_of_ejector_cores": 6,
+    "compatible_tools": []
+}

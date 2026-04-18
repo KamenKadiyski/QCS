@@ -50,14 +50,9 @@ def add_compatible_tools_on_machine_create(sender, instance, created, **kwargs):
 @receiver(post_save, sender=Tool)
 def add_tool_to_compatible_machines(sender, instance, created, **kwargs):
     compatible_machines = []
-
-    # Find compatible machines for the new tool
     for machine in Machine.objects.all():
         if tool_is_compatible(instance, machine):
             compatible_machines.append(machine)
-    
-    # Update the ManyToMany relationship
-
     instance.compatible_machines.set(compatible_machines)
     if not compatible_machines:
         logger.info(f"No compatible machines found for tool {instance.code}")

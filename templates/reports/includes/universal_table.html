@@ -1,67 +1,25 @@
 <div class="table-responsive shadow-sm mt-3">
-    <table class="table table-hover table-bordered bg-white">
+    <table class="table table-hover table-bordered bg-white align-middle">
         <thead class="table-dark">
             <tr>
-
-                {% if data.0.name or data.0.colourman %} <th>Colourman</th> {% endif %}
-
-
-                {% if data.0.usage_date or data.0.date or data.0.created_at %} <th>Date</th> {% endif %}
-
-
-                {% if data.0.label %} <th>Label</th> {% endif %}
-                {% if data.0.job %} <th>Job code</th> {% endif %}
-                {% if data.0.customer %} <th>Customer</th> {% endif %}
-                {% if data.0.amount %} <th>Amount</th> {% endif %}
-                {% if data.0.total_points %} <th>Points</th> {% endif %}
-                {% if data.0.total_fails %} <th>Unacceptable</th> {% endif %}
+                {# Взимаме заглавията директно от обекта result, който твоят Report Engine подава #}
+                {% for header in result.headers %}
+                    <th class="text-nowrap">{{ header }}</th>
+                {% endfor %}
             </tr>
         </thead>
+
         <tbody>
-            {% for item in data %}
+            {% for row in data %}
             <tr>
-
-                {% if item.name or item.colourman %}
-                <td>
-                    {% if item.name %}
-                        <strong>{{ item.name }}</strong>
-                    {% elif item.colourman %}
-                        <strong>{{ item.colourman.name }}</strong>
-                    {% endif %}
-                </td>
-                {% endif %}
-
-
-                {% if item.usage_date or item.date or item.created_at %}
-                <td>
-                    {% if item.usage_date %}{{ item.usage_date|date:"d.m.Y" }}
-                    {% elif item.date %}{{ item.date|date:"d.m.Y" }}
-                    {% elif item.created_at %}{{ item.created_at|date:"d.m.Y" }}{% endif %}
-                </td>
-                {% endif %}
-
-
-                {% if item.label %} <td>{{ item.label.description }}</td> {% endif %}
-
-
-                {% if item.job %} <td>{{ item.job.job_code }}</td> {% endif %}
-                {% if item.customer %} <td>{{ item.customer.name }}</td> {% endif %}
-
-
-
-                {% if item.amount %} <td>{{ item.amount }}</td> {% endif %}
-
-
-                {% if item.total_points is not None %}
-                    <td class="text-center fw-bold {% if item.total_points >= 2.0 %}text-danger{% else %}text-warning{% endif %}">
-                        {{ item.total_points }}
-                    </td>
-                {% endif %}
-
-
-                {% if item.total_fails is not None %}
-                    <td class="text-center"><span class="badge bg-secondary">{{ item.total_fails }}</span></td>
-                {% endif %}
+                {# Итерираме директно през клетките на реда #}
+                {% for cell in row %}
+                    <td>{{ cell|default:"0" }}</td>
+                {% endfor %}
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="100" class="text-center py-4 text-muted">Няма намерени данни.</td>
             </tr>
             {% endfor %}
         </tbody>

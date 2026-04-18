@@ -1,0 +1,15 @@
+{
+    "machine_number": "18",
+    "building":3,
+    "machine_model": "BMB eKW 1150/12500",
+    "machine_description": "High-tonnage hybrid machine designed for large industrial containers and crates. High precision and fast cycles.",
+    "max_clamping_force": 11500,
+    "max_tool_width": 1300.0,
+    "max_tool_height": 1250.0,
+    "max_tool_thickness": 1400.0,
+    "max_moving_platen_stroke": 1600.0,
+    "max_injection_capacity": 5800.0,
+    "max_ejecting_stroke": 550.0,
+    "number_of_ejector_cores": 16,
+    "compatible_tools": []
+}

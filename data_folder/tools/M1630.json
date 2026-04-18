@@ -1,0 +1,14 @@
+{
+
+            "code": "1630",
+            "description": "80 litter box light version MK2",
+            "clamping_force": 3400,
+            "tool_width": 880.0,
+            "tool_height": 610.0,
+            "tool_thickness": 750.0,
+            "moving_platen_stroke": 600.0,
+            "injection_capacity": 1200.0,
+            "ejecting_stroke": 280.0,
+            "number_of_ejector_cores": 8,
+            "is_in_use": true
+        }

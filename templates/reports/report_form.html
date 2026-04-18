@@ -1,0 +1,52 @@
+{% extends "shared/base.html" %}
+
+{% block content %}
+<h2>{{ report.name }}</h2>
+<p>{{ report.description }}</p>
+
+{% if error %}
+<div class="alert alert-danger">{{ error }}</div>
+{% endif %}
+
+<form method="get">
+    {% for p in report.parameters.all %}
+        <div class="mb-3">
+            <label class="form-label">{{ p.label }}</label>
+
+            {% if p.parameter_type == "date" %}
+                <input type="date" name="{{ p.name }}" class="form-control">
+
+            {% elif p.parameter_type == "int" %}
+                <input type="number" name="{{ p.name }}" class="form-control">
+
+            {% elif p.parameter_type == "str" %}
+                <input type="text" name="{{ p.name }}" class="form-control">
+
+            {% elif p.parameter_type == "bool" %}
+                <input type="checkbox" name="{{ p.name }}">
+
+            {% elif p.parameter_type == "choice" %}
+                <select name="{{ p.name }}" class="form-select">
+                    {% for obj in p.get_choices %}
+                        <option value="{{ obj.pk }}">{{ obj }}</option>
+                    {% endfor %}
+                </select>
+            {% elif p.parameter_type == "static_choice" %}
+    <select name="{{ p.name }}" class="form-select">
+        <option value="">--- Choose type---</option>
+        {% if p.name == "material_type" %}
+            <option value="block">PPC (Block Copolymer)</option>
+            <option value="clear">Clear PPR (Random Copolymer)</option>
+            <option value="homopolymer">PPH (Homopolymer)</option>
+            <option value="other">Other</option>
+            <option value="All">All Types</option>
+        {% endif %}
+    </select>
+{% endif %}
+
+        </div>
+    {% endfor %}
+
+    <button class="btn btn-primary">Load data</button>
+</form>
+{% endblock %}

@@ -1,0 +1,15 @@
+{
+    "machine_number": "7",
+    "building": 3,
+    "machine_model": "eKW 1150PI/11500",
+    "machine_description": "Full electric high performance injection molding machine for large parts.",
+    "max_clamping_force": 11500,
+    "max_tool_width": 1250.0,
+    "max_tool_height": 1120.0,
+    "max_tool_thickness": 1400.0,
+    "max_moving_platen_stroke": 1400.0,
+    "max_injection_capacity": 11500.0,
+    "max_ejecting_stroke": 400.0,
+    "number_of_ejector_cores": 12,
+    "compatible_tools": []
+  }

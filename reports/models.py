@@ -31,11 +31,12 @@ class ReportParameter(models.Model):
         ('str', 'String'),
         ('choice', 'Choice'),
         ('bool', 'Boolean'),
+        ('static_choice', 'Static Choice'),
     )
     report = models.ForeignKey(ReportConfiguration, on_delete=models.CASCADE,related_name='parameters')
     name = models.CharField(max_length=255, help_text='Parameter name into function')
     label = models.CharField(max_length=255, help_text='Parameter label for the user')
-    parameter_type = models.CharField(max_length=10, choices=PARAMETER_TYPES,
+    parameter_type = models.CharField(max_length=20, choices=PARAMETER_TYPES,
                                       help_text='Parameter type')
     source_model = models.CharField(max_length=50,
                                     blank=True, null=True,

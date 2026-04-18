@@ -9,23 +9,19 @@ User = get_user_model()
 # Create your tests here.
 class EmployeeSignalTest(TestCase):
     def setUp(self):
-        # Създаваме различни позиции за тест на ROLE_MAP
         self.pos_qc = WorkPosition.objects.create(name="QC Inspector")
         self.pos_admin = WorkPosition.objects.create(name="Administrator")
         self.pos_other = WorkPosition.objects.create(name="Cleaner")
         self.pos_supervisor = WorkPosition.objects.create(name="Supervisor")
         self.pos_team_leader = WorkPosition.objects.create(name="Team Leader")
-
-        # Имена по fixture/production, включително исторически варианти.
         Group.objects.create(name="QC Inspector")
         Group.objects.create(name="QC Manager")
         Group.objects.create(name="Supervisors")
 
     def test_user_creation_with_correct_role_and_slug(self):
-        """Проверка за автоматично създаване на User, роля и username slug"""
         emp = Employee.objects.create(
-            first_name="Ivan",
-            last_name="Ivanov",
+            first_name="Andy",
+            last_name="Holt",
             clock_number="1001",
             work_position=self.pos_qc,
             login_required=True
@@ -33,15 +29,14 @@ class EmployeeSignalTest(TestCase):
         emp.refresh_from_db()
 
         self.assertIsNotNone(emp.user)
-        self.assertEqual(emp.user.username, "ivan-ivanov")
+        self.assertEqual(emp.user.username, "andy-holt")
         self.assertEqual(emp.user.role, "qc")
         self.assertFalse(emp.user.is_staff)
         # Проверка на имейла в опашката
         self.assertEqual(len(mail.outbox), 1)
-        self.assertIn("ivan-ivanov", mail.outbox[0].body)
+        self.assertIn("andy-holt", mail.outbox[0].body)
 
     def test_is_staff_assignment_for_admin_role(self):
-        """Проверка дали роля 'admin' получава is_staff=True"""
         emp = Employee.objects.create(
             first_name="Admin",
             last_name="User",
@@ -54,23 +49,20 @@ class EmployeeSignalTest(TestCase):
         self.assertEqual(emp.user.role, "admin")
 
     def test_username_collision_handling(self):
-        """Проверка дали се справя с дублиращи се имена (итерация на username)"""
-        # Първи потребител
         Employee.objects.create(
-            first_name="John", last_name="Doe",
-            clock_number="J1", work_position=self.pos_other, login_required=True
+            first_name="Gary", last_name="Ireland",
+            clock_number="G1", work_position=self.pos_other, login_required=True
         )
         # Втори потребител със същото име
         emp2 = Employee.objects.create(
-            first_name="John", last_name="Doe",
-            clock_number="J2", work_position=self.pos_other, login_required=True
+            first_name="Gary", last_name="Ireland",
+            clock_number="G2", work_position=self.pos_other, login_required=True
         )
         emp2.refresh_from_db()
 
-        self.assertEqual(emp2.user.username, "john-doe2")
+        self.assertEqual(emp2.user.username, "gary-ireland2")
 
     def test_no_login_no_user(self):
-        """Проверка, че не се създава User, ако login_required е False"""
         emp = Employee.objects.create(
             first_name="No",
             last_name="Login",
@@ -82,9 +74,8 @@ class EmployeeSignalTest(TestCase):
         self.assertEqual(len(mail.outbox), 0)
 
     def test_default_role_mapping(self):
-        """Проверка дали непозната позиция получава роля 'operator' по подразбиране"""
         emp = Employee.objects.create(
-            first_name="Unknown",
+            first_name="Blagovest",
             last_name="Position",
             clock_number="5555",
             work_position=self.pos_other,
@@ -95,7 +86,7 @@ class EmployeeSignalTest(TestCase):
 
     def test_user_gets_expected_qc_group(self):
         emp = Employee.objects.create(
-            first_name="Ana",
+            first_name="Lee",
             last_name="Inspector",
             clock_number="2001",
             work_position=self.pos_qc,
@@ -107,7 +98,7 @@ class EmployeeSignalTest(TestCase):
 
     def test_supervisor_role_maps_to_supervisors_group_alias(self):
         emp = Employee.objects.create(
-            first_name="Sam",
+            first_name="Ste",
             last_name="Supervisor",
             clock_number="2002",
             work_position=self.pos_supervisor,
@@ -121,7 +112,7 @@ class EmployeeSignalTest(TestCase):
     def test_missing_group_is_created_and_assigned(self):
         Group.objects.filter(name="Team Leader").delete()
         emp = Employee.objects.create(
-            first_name="Tina",
+            first_name="Kamen",
             last_name="Leader",
             clock_number="2003",
             work_position=self.pos_team_leader,

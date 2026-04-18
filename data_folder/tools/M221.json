@@ -1,0 +1,13 @@
+{
+            "code": "221",
+            "description": "Tool for lids",
+            "clamping_force": 6500,
+            "tool_width": 1100.0,
+            "tool_height": 850.0,
+            "tool_thickness": 650.0,
+            "moving_platen_stroke": 800.0,
+            "injection_capacity": 1950.0,
+            "ejecting_stroke": 3200.0,
+            "number_of_ejector_cores": 4,
+            "is_in_use": false
+}
