@@ -8,7 +8,7 @@ ENV/
 build/
 dist/
 
-# Django
+
 db.sqlite3
 db.sqlite4
 staticfiles/
@@ -16,7 +16,7 @@ media/
 data_folder/*.pdf
 data_folder/*.xlsx
 
-# Конфигурация и тайни (КРИТИЧНО)
+
 .env
 .python-version
 
