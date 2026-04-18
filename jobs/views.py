@@ -122,13 +122,10 @@ class JobLogCreateView(CreateView):
     page_title = 'Create Job Log'
 
     def post(self, request, *args, **kwargs):
-        # Ако е натиснат бутона за опресняване
         if "_refresh" in request.POST:
-            self.object = None  # Фикс за грешката: инициализираме обекта като празен
+            self.object = None
             form = self.get_form()
             return self.render_to_response(self.get_context_data(form=form))
-
-        # Стандартна логика за запис
         return super().post(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):

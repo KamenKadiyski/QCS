@@ -140,16 +140,3 @@ def scrap_report_comparing_materials(start_date, end_date,material_type):
 
 
 
-class ReportLibrary:
-
-
-    @staticmethod
-    def get_detailed_scrap_report(job_code):
-
-        report_set = JobLog.objects.filter(
-            job__job_code=job_code
-        ).annotate(
-            total_scrap=Sum('scraps__amount_scrap')
-        ).order_by('-date_and_time')
-
-        return report_set

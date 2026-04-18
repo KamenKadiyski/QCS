@@ -11,14 +11,14 @@ class DynamicReportForm(forms.Form):
                 "required": parameter.is_required,
             }
 
-            # DATE FIELD
+            # Date
             if parameter.parameter_type == "date":
                 self.fields[parameter.name] = forms.DateField(
                     widget=forms.DateInput(attrs={"type": "date"}),
                     **field_kwargs
                 )
 
-            # CHOICE FIELD (Динамичен от Модел)
+            # Choice
             elif parameter.parameter_type == "choice" and parameter.source_model:
                 try:
                     app_label, model_name = parameter.source_model.split(".")
@@ -30,7 +30,7 @@ class DynamicReportForm(forms.Form):
                 except Exception:
                     self.fields[parameter.name] = forms.CharField(disabled=True, initial="Error loading model")
 
-            # STATIC CHOICE FIELD (За материалите)
+            # Static Choice
             elif parameter.parameter_type == "static_choice":
                 choices = [('', '--- All Types ---')]
                 if parameter.name == "material_type":
@@ -42,22 +42,20 @@ class DynamicReportForm(forms.Form):
                     ]
                 self.fields[parameter.name] = forms.ChoiceField(choices=choices, **field_kwargs)
 
-            # INTEGER FIELD
+            # Int
             elif parameter.parameter_type == "int":
                 self.fields[parameter.name] = forms.IntegerField(**field_kwargs)
 
-            # BOOLEAN FIELD
+            # Boolean
             elif parameter.parameter_type == "bool":
                 self.fields[parameter.name] = forms.BooleanField(
                     required=False, widget=forms.CheckboxInput(attrs={"class": "form-check-input"})
                 )
-                continue # Скипваме долния клас за буутстрап
-
-            # DEFAULT STRING
+                continue
+            #Strings
             else:
                 self.fields[parameter.name] = forms.CharField(**field_kwargs)
 
-        # Bootstrap Styling
         for name, field in self.fields.items():
             if not isinstance(field.widget, forms.CheckboxInput):
                 field.widget.attrs.update({"class": "form-control"})

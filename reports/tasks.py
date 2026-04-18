@@ -38,7 +38,7 @@ def scrap_persent_mail_notification(job_log_id, job_code):
 @shared_task
 def check_monthly_scrap_rate():
     now = timezone.now()
-    # Правим датите "aware" (с часова зона) и ги разширяваме до началото и края на деня
+
     first_day = timezone.make_aware(datetime(now.year, now.month, 1, 0, 0, 0))
 
     _, last_day_num = calendar.monthrange(now.year, now.month)
