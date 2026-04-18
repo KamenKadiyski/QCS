@@ -1,7 +1,10 @@
-# QCSystem - Система за производствен и качествен мониторинг
+# 🏭 QCSystem - Manufacturing & Quality Control Platform
 
-**QCSystem** е специализирана ERP/MES уеб платформа, разработена на Django, предназначена за управление на производствени процеси в заводи за пластмасови изделия. Системата проследява жизнения цикъл на производството – от машини и матрици до окачествяване и управление на брака.
+**QCSystem** е специализирана уеб платформа за управление и мониторинг на производството в заводи за пластмасови изделия. Системата проследява жизнения цикъл на продукцията – от техническите параметри на шприцмашините до финалния качествен контрол.
 
+🌐 **Live Demo (Azure):** [https://qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net](https://qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net)
+
+---
 ## 🚀 Основни модули
 
 *   **Jobs & Job Logs**: Управление на работни поръчки и детайлно следене на производствените цикли в реално време.
@@ -20,13 +23,7 @@
 *   **Deployment**: Azure App Service & GitHub Actions (CI/CD)
 
 
-# 🏭 QCSystem - Manufacturing & Quality Control Platform
 
-**QCSystem** е специализирана уеб платформа за управление и мониторинг на производството в заводи за пластмасови изделия. Системата проследява жизнения цикъл на продукцията – от техническите параметри на шприцмашините до финалния качествен контрол.
-
-🌐 **Live Demo (Azure):** [https://qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net](https://qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net)
-
----
 
 ## 📂 Структура на проекта
 
