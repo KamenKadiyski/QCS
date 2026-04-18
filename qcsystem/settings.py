@@ -36,27 +36,22 @@ DEBUG = True
 
 import os
 
-if os.environ.get('AZURE_WEBAPP_NAME'):
-
+# Използваме WEBSITE_SITE_NAME, която е гарантирана от Azure App Service
+if os.environ.get('WEBSITE_SITE_NAME') or os.environ.get('AZURE_WEBAPP_NAME'):
     DEBUG = False
-
     ALLOWED_HOSTS = [
         'qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net',
         '.azurewebsites.net',
     ]
-
     CSRF_TRUSTED_ORIGINS = [
         'https://*.azurewebsites.net',
         'https://qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net',
     ]
 else:
-
     DEBUG = True
     ALLOWED_HOSTS = ['localhost', '127.0.0.1']
-    CSRF_TRUSTED_ORIGINS = [
-        "http://localhost:8000",
-        "http://127.0.0.1:8000",
-    ]
+    CSRF_TRUSTED_ORIGINS = ["http://localhost:8000", "http://127.0.0.1:8000"]
+
 
 #ALLOWED_HOSTS = ['127.0.0.1', 'localhost','qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net']
 #CSRF_TRUSTED_ORIGINS = [
