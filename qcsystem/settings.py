@@ -33,11 +33,12 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-default-exam-key-123')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost','qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net']
 CSRF_TRUSTED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
     "https://azurewebsites.net",
+    "qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net"
 ]
 CSRF_COOKIE_HTTPONLY = False
 CSRF_COOKIE_SAMESITE = 'Lax'
@@ -48,6 +49,7 @@ CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
+    "qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net"
 ]
 CORS_ALLOW_HEADERS = [
     "accept",
@@ -58,7 +60,7 @@ CORS_ALLOW_HEADERS = [
     "x-requested-with",
 ]
 AUTH_USER_MODEL = 'accounts.User'
-# Application definition
+
 PROJECT_APPS = [
     'accounts',
     'equipment.apps.EquipmentConfig',
@@ -118,9 +120,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'qcsystem.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/6.0/ref/settings/#databases
-# Add these at the top of your settings.py
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
@@ -128,7 +128,7 @@ REST_FRAMEWORK = {
         'rest_framework_simplejwt.authentication.JWTAuthentication', # Добави това за JWT
     ),
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.AllowAny', # Промени от IsAuthenticated на AllowAny за тест
+        'rest_framework.permissions.AllowAny',
     ),
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 10,
