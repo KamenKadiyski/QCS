@@ -38,7 +38,7 @@ CSRF_TRUSTED_ORIGINS = [
     "http://localhost:5173",
     "http://127.0.0.1:5173",
     "https://azurewebsites.net",
-    "qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net"
+    'https://qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net',
 ]
 CSRF_COOKIE_HTTPONLY = False
 CSRF_COOKIE_SAMESITE = 'Lax'
