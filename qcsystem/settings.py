@@ -17,6 +17,7 @@ from os import getenv
 from urllib.parse import urlparse, parse_qsl
 
 from django.conf.global_settings import INSTALLED_APPS
+
 from dotenv import load_dotenv
 load_dotenv()
 
@@ -150,7 +151,7 @@ SPECTACULAR_SETTINGS = {
 }
 
 
-# Replace the DATABASES section of your settings.py with this
+
 tmpPostgres = urlparse(os.getenv("DATABASE_URL"))
 
 DATABASES = {
@@ -164,6 +165,7 @@ DATABASES = {
         'OPTIONS': dict(parse_qsl(tmpPostgres.query)),
     }
 }
+# Redis Configuratio
 
 
 CELERY_BROKER_URL = 'redis://localhost:6379/0'
