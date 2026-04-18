@@ -24,7 +24,7 @@
 
 **QCSystem** е специализирана уеб платформа за управление и мониторинг на производството в заводи за пластмасови изделия. Системата проследява жизнения цикъл на продукцията – от техническите параметри на шприцмашините до финалния качествен контрол.
 
-🌐 **Live Demo (Azure):** [https://azurewebsites.net](https://azurewebsites.net)
+🌐 **Live Demo (Azure):** [https://qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net](https://qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net)
 
 ---
 
@@ -83,4 +83,3 @@ graph TD
   ```
 ### Важно: Проекта работи с база данни качена на neon.tech ! Не е необходимо да се прилагат миграции!
 
-https://qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net
