@@ -1,0 +1,36 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+ENV/
+build/
+dist/
+
+# Django
+db.sqlite3
+db.sqlite4
+staticfiles/
+media/
+data_folder/*.pdf
+data_folder/*.xlsx
+
+# Конфигурация и тайни (КРИТИЧНО)
+.env
+.python-version
+
+# Celery
+celerybeat-schedule
+celerybeat-schedule-shm
+celerybeat-schedule-wal
+
+# IDE - PyCharm / VSCode
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Система (macOS)
+.DS_Store
+Thumbs.db
