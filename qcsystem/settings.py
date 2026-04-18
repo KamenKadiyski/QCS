@@ -166,10 +166,23 @@ DATABASES = {
     }
 }
 # Redis Configuratio
+REDIS_URL = os.getenv('REDIS_STRING', 'redis://localhost:6379/0')
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": REDIS_URL,
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "CONNECTION_POOL_KWARGS": {
+                "ssl_cert_reqs": None
+            }
+        }
+    }
+}
 
-
-CELERY_BROKER_URL = 'redis://localhost:6379/0'
-CELERY_RESULT_BACKEND = 'redis://localhost:6379/0'
+CELERY_BROKER_URL = REDIS_URL
+CELERY_BROKER_USE_SSL = {'ssl_cert_reqs': None}
+CELERY_REDIS_BACKEND_USE_SSL = {'ssl_cert_reqs': None}
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
