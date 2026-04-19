@@ -32,7 +32,6 @@ class EmployeeSignalTest(TestCase):
         self.assertEqual(emp.user.username, "andy-holt")
         self.assertEqual(emp.user.role, "qc")
         self.assertFalse(emp.user.is_staff)
-        # Проверка на имейла в опашката
         self.assertEqual(len(mail.outbox), 1)
         self.assertIn("andy-holt", mail.outbox[0].body)
 
