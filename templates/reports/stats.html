@@ -1,0 +1,30 @@
+{% extends 'shared/base.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="card shadow-sm" style="max-width: 500px; margin: 0 auto;">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Some statistics</h5>
+            <i class="bi bi-info-circle"></i>
+        </div>
+        <div class="card-body text-center">
+            <div class="mb-4">
+                <h6 class="text-muted text-uppercase small">Total jobs in log:</h6>
+                <p class="display-4 fw-bold text-dark">{{ total }}</p>
+            </div>
+
+            <div class="mb-4 border-top pt-3">
+                <h6 class="text-muted text-uppercase small">Last added job to log (Job Code)</h6>
+                <p class="h4 text-primary">{{ latest|default:"No Data" }}</p>
+            </div>
+
+
+            <div class="d-grid gap-2 mt-4">
+                <a href="{% url 'accounts:home' %}" class="btn btn-secondary">
+                    <i class="bi bi-arrow-left"></i> Back to Home
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

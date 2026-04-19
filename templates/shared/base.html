@@ -11,9 +11,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     {% if user.is_authenticated %}
+        <a href="{% url 'reports:daily_stats' %}" class="btn btn-outline-info btn-sm me-3" title="View Statistics"><i class="bi bi-bar-chart-fill"></i> Stats</a>
         <span class="text-light me-2 small">Hello, {{ user.username }}</span>
-
-        <!-- Форма за сигурен Logout -->
         <form action="{% url 'accounts:logout' %}" method="post" class="d-inline">
             {% csrf_token %}
             <button type="submit" class="btn btn-outline-danger btn-sm">Logout</button>

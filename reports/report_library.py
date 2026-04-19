@@ -137,6 +137,68 @@ def scrap_report_comparing_materials(start_date, end_date,material_type):
     }
 
 
+def scrap_report_by_tool(start_date, end_date,tool_code=None):
 
+    scrap_logs = ScrapLog.objects.all()
+
+    if tool_code:
+        scrap_logs = scrap_logs.filter(job_log__current_tool__code=tool_code)
+
+
+    if start_date:
+            scrap_logs = scrap_logs.filter(date_and_time__gte=start_date)
+    if end_date:
+            scrap_logs = scrap_logs.filter(date_and_time__lte=end_date)
+
+    scrap_logs = scrap_logs.values('job_log__current_tool__code').annotate(
+            total_scrap=Sum('amount_scrap')
+        ).order_by('job_log__current_tool__code')
+
+
+    rows = []
+    scrap_values = []
+    labels = []
+    colours = [
+    'rgba(255, 99, 132, 1)',   # Розово-червено
+    'rgba(54, 162, 235, 1)',   # Небесно синьо
+    'rgba(255, 206, 86, 1)',   # Жълто
+    'rgba(75, 192, 192, 1)',   # Тюркоазено
+    'rgba(153, 102, 255, 1)',  # Лилаво
+    'rgba(255, 159, 64, 1)',   # Оранжево
+    'rgba(201, 203, 207, 1)',  # Сиво
+    'rgba(51, 204, 51, 1)',    # Ярко зелено
+    'rgba(255, 51, 204, 1)',   # Магента
+    'rgba(102, 51, 0, 1)'      # Кафяво
+]
+
+    dataset = []
+    for slog in scrap_logs:
+        rows.append({
+            "Tool": slog['job_log__current_tool__code'],
+            "Total Scrap by tool": slog['total_scrap'],
+
+        })
+
+        labels.append(slog['job_log__current_tool__code'])
+        scrap_values.append(slog['total_scrap'])
+        dataset.append({
+            'label': slog['job_log__current_tool__code'],
+            'data': [slog['total_scrap']],
+            'backgroundColor': colours[labels.index(slog['job_log__current_tool__code']) % len(colours)],
+            'borderWidth': 1
+
+        })
+    chart = {
+        'labels': ['Total Scrap'],
+        'datasets': dataset
+    }
+    return {
+        'columns': [
+            'Tool',
+            'Total Scrap by tool',
+        ],
+        'rows': rows,
+        'chart': chart
+    }
 
 
