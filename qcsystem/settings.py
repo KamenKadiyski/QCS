@@ -67,8 +67,8 @@ SESSION_COOKIE_SAMESITE = 'Lax'
 
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
-    "http://localhost:5173",
-    "http://127.0.0.1:5173",
+    "http://localhost:8000",
+    "http://127.0.0.1:8000",
     "https://qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net"
 ]
 CORS_ALLOW_HEADERS = [
