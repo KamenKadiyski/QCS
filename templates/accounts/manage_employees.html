@@ -119,7 +119,7 @@
             document.getElementById('empCount').innerText = employees.length;
 
             if (!employees || employees.length === 0) {
-                listDiv.innerHTML = '<div class="text-center py-5 text-muted">Няма регистрирани служители.</div>';
+                listDiv.innerHTML = '<div class="text-center py-5 text-muted">There are no registered employees.</div>';
                 return;
             }
 
@@ -142,7 +142,7 @@
                                 `<span class="badge bg-success-soft text-success status-pill me-2 border border-success">
                                     <i class="fas fa-check-circle me-1"></i>${emp.username}
                                  </span>` :
-                                `<span class="badge bg-light text-muted status-pill border">Без акаунт</span>`
+                                `<span class="badge bg-light text-muted status-pill border">Without login</span>`
                             }
                             <div class="small fw-bold text-primary mt-1" style="font-size: 0.65rem;">${emp.role || ''}</div>
                         </div>
