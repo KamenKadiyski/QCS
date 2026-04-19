@@ -189,11 +189,18 @@ class ScrapLogAddView(CreateView):
     success_url = reverse_lazy('jobs:add_scrap_log')
     page_title = 'Add Scrap Log'
 
+    def get_form(self, form_class=None):
+        form = super().get_form(form_class)
+        form.fields['job_log'].queryset = JobLog.objects.filter(is_complete=False)
+        return form
+
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context.update({
-            'page_title': 'Регистриране на Брак',
-            'scrap_logs': ScrapLog.objects.select_related('job_log', 'scrap_reason').all().order_by('-date_and_time'),
+            'page_title': 'Scrap loging',
+            'scrap_logs': ScrapLog.objects.select_related('job_log', 'scrap_reason').order_by('-date_and_time'),
+
         })
         return context
 
