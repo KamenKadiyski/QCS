@@ -2,6 +2,7 @@ from django.views.generic import CreateView, ListView, UpdateView
 from django import forms
 from rest_framework.reverse import reverse_lazy
 
+from jobs.models import JobLog
 from .models import QCLog, QCIssue
 
 
@@ -34,7 +35,7 @@ class AddToQCLogView(CreateView):
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
-
+        form.fields['job_log'].queryset = JobLog.objects.filter(is_complete=False)
         for name, field in form.fields.items():
             if isinstance(field.widget, forms.CheckboxInput):
                 field.widget.attrs.update({'class': 'form-check-input'})
@@ -93,6 +94,7 @@ class AddToQCIssueView(CreateView):
 
     def get_form(self, form_class=None):
         form = super().get_form(form_class)
+        form.fields['job_log'].queryset = JobLog.objects.filter(is_complete=False)
         for name, field in form.fields.items():
             if isinstance(field.widget, forms.CheckboxInput):
                 field.widget.attrs.update({'class': 'form-check-input'})
