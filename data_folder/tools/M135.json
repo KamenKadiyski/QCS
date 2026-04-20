@@ -1,0 +1,13 @@
+{
+    "code": "M135",
+    "description": "Матрица за кофа 16L с улей за изливане и отделяща се изстисквачка (PP)",
+    "clamping_force": 12000,
+    "tool_width": 1350.0,
+    "tool_height": 1350.0,
+    "tool_thickness": 1050.0,
+    "moving_platen_stroke": 1500.0,
+    "injection_capacity": 5800.0,
+    "ejecting_stroke": 550.0,
+    "number_of_ejector_cores": 12,
+    "is_in_use": false
+}

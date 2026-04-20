@@ -1,9 +1,9 @@
-{% extends 'shared/../shared/base.html' %}
+{% extends 'shared/base.html' %}
 {% load static %}
 
 {% block content %}
 <style>
-    /* Прави целия ред да изглежда кликаем и добавя лек ефект при посочване */
+
     .clickable-row {
         cursor: pointer;
         transition: background-color 0.2s ease;
@@ -84,7 +84,7 @@
         const rows = document.querySelectorAll(".clickable-row");
         rows.forEach(row => {
             row.addEventListener("click", function() {
-                // Пренасочва към URL-а, записан в data-href
+
                 window.location.href = this.dataset.href;
             });
         });

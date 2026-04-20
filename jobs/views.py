@@ -139,7 +139,7 @@ class JobLogListView(ListView):
     template_name = 'jobs/list_job_logs.html'
     page_title = 'List of Job Logs'
     def get_queryset(self):
-        return JobLog.objects.select_related('job', 'current_material', 'current_additive', 'current_tool', 'current_machine').all()
+        return JobLog.objects.select_related('job', 'current_material', 'current_additive', 'current_tool', 'current_machine').all().order_by('-date_and_time')
 
 
     def get_context_data(self, **kwargs):

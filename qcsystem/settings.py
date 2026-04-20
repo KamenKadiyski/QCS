@@ -37,7 +37,18 @@ DEBUG = True
 import os
 
 # Използваме WEBSITE_SITE_NAME, която е гарантирана от Azure App Service
-if os.environ.get('WEBSITE_SITE_NAME') or os.environ.get('AZURE_WEBAPP_NAME'):
+import os
+
+# Проверка дали сме в Azure или локално
+import os
+
+import os
+import ssl
+
+# 1. Проверка за средата
+IS_AZURE = os.environ.get('WEBSITE_SITE_NAME') or os.environ.get('AZURE_WEBAPP_NAME')
+
+if IS_AZURE:
     DEBUG = False
     ALLOWED_HOSTS = [
         'qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net',
@@ -47,11 +58,50 @@ if os.environ.get('WEBSITE_SITE_NAME') or os.environ.get('AZURE_WEBAPP_NAME'):
         'https://*.azurewebsites.net',
         'https://qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net',
     ]
+    REDIS_URL = os.getenv('REDIS_STRING')
 else:
     DEBUG = True
     ALLOWED_HOSTS = ['localhost', '127.0.0.1']
     CSRF_TRUSTED_ORIGINS = ["http://localhost:8000", "http://127.0.0.1:8000"]
+    REDIS_URL =  'redis://127.0.0.1:6379/0'
 
+# 2. CACHE конфигурация (django-redis)
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": REDIS_URL,
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "CONNECTION_POOL_KWARGS": {
+                "ssl_cert_reqs": ssl.CERT_NONE if REDIS_URL and REDIS_URL.startswith('rediss://') else None
+            }
+        }
+    }
+}
+
+# 3. CELERY конфигурация
+CELERY_BROKER_URL = REDIS_URL
+CELERY_RESULT_BACKEND = REDIS_URL
+
+# Активираме SSL настройките със специфични низове за Celery/Redis
+if REDIS_URL and REDIS_URL.startswith('rediss://'):
+    ssl_conf = {'ssl_cert_reqs': ssl.CERT_NONE}
+    CELERY_BROKER_USE_SSL = ssl_conf
+    CELERY_REDIS_BACKEND_USE_SSL = ssl_conf
+
+    # Задължително добавяме параметъра в самия URL за бекенда, за да избегнем ValueError
+    if 'ssl_cert_reqs' not in CELERY_RESULT_BACKEND:
+        sep = '&' if '?' in CELERY_RESULT_BACKEND else '?'
+        CELERY_RESULT_BACKEND += f"{sep}ssl_cert_reqs=none"
+else:
+    CELERY_BROKER_USE_SSL = False
+    CELERY_REDIS_BACKEND_USE_SSL = False
+
+# Допълнителни Celery настройки
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
 
 #ALLOWED_HOSTS = ['127.0.0.1', 'localhost','qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net']
 #CSRF_TRUSTED_ORIGINS = [
@@ -185,26 +235,7 @@ DATABASES = {
     }
 }
 
-REDIS_URL = os.getenv('REDIS_STRING',)
-CACHES = {
-    "default": {
-        "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": REDIS_URL,
-        "OPTIONS": {
-            "CLIENT_CLASS": "django_redis.client.DefaultClient",
-            "CONNECTION_POOL_KWARGS": {
-                "ssl_cert_reqs": None
-            }
-        }
-    }
-}
 
-CELERY_BROKER_URL = REDIS_URL
-CELERY_BROKER_USE_SSL = {'ssl_cert_reqs': None}
-CELERY_REDIS_BACKEND_USE_SSL = {'ssl_cert_reqs': None}
-CELERY_ACCEPT_CONTENT = ['json']
-CELERY_TASK_SERIALIZER = 'json'
-CELERY_RESULT_SERIALIZER = 'json'
 
 
 
