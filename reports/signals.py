@@ -1,10 +1,7 @@
-from django.core.mail import send_mail
-from django.db.models import Model
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
 from jobs.models import JobLog, ScrapLog
-
 from reports.tasks import job_log_mail_notification, scrap_persent_mail_notification
 
 
