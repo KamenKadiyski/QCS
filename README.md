@@ -1,3 +1,21 @@
+🏭 QCSystem - Manufacturing & Quality Control PlatformQCSystem is a specialized web platform designed for production management and monitoring in plastic injection molding facilities. The system tracks the complete production lifecycle—from technical injection molding machine parameters to final quality control.🌐 Live Demo (Azure): https://qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.netNote: QCSystem is built for real-world production environments using authentic industry forms. All technical specifications and data are sourced directly from manufacturers and suppliers.🚀 Core ModulesJobs & Job Logs: Work order management and real-time detailed production cycle tracking.Equipment: Comprehensive database for Injection Molding Machines (IMMs) and Molds/Tools, including technical specifications and compatibility mapping.Materials: Management of raw materials (polymers like PP, PPC, PPH) and additives used in production.QC Logging: Quality assurance and inspection module for recording deviations and QC issues.Reports: Dynamic reporting engine generating analytics on Scrap rates and Overall Equipment Effectiveness (OEE).Trading Parties: Supplier and partner relationship management.🛠 Tech StackBackend: Python 3.14 / Django 6.0Database: PostgreSQL (Neon.tech)Asynchronous Tasks: Celery + Redis (for email notifications and automated monthly reports)Frontend: Django Templates + Bootstrap 5 + Chart.jsDeployment: Azure App Service & GitHub Actions (CI/CD)📂 Project StructuretextQCSystem/
+├── accounts/          # User authentication, roles, and HR management
+├── equipment/         # Machines (BMB), Tooling/Molds, and compatibility
+├── jobs/              # Work orders, Process logs, and Scrap tracking
+├── materials/         # Raw materials (PP, PPC, PPH) and additives
+├── qcloging/          # Quality Control and inspection sheets
+├── reports/           # Dynamic Report Engine with Chart.js visualizations
+├── qcsystem/          # Core project configuration
+├── shared/            # Common views, error handlers (404/500), and mixins
+├── templates/         # Global HTML templates (What More UK Corporate Style)
+├── .github/           # CI/CD pipelines for automated Azure deployment
+└── requirements.txt   # Dependencies (Django, Celery, Redis, etc.)
+
+
+
+
+BG Version
+
 # 🏭 QCSystem - Manufacturing & Quality Control Platform
 
 **QCSystem** е специализирана уеб платформа за управление и мониторинг на производството в заводи за пластмасови изделия. Системата проследява жизнения цикъл на продукцията – от техническите параметри на шприцмашините до финалния качествен контрол.
