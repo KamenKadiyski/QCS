@@ -2,7 +2,7 @@
 
 **QCSystem** is a specialized web platform designed for production management and monitoring in plastic injection molding facilities. The system tracks the complete production lifecycle—from technical injection molding machine parameters to final quality control.
 
-🌐 **Live Demo (Azure):** [https://azurewebsites.net](https://azurewebsites.net)
+🌐 **Live Demo (Azure):** [https://qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net](https://qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net)
 
 > **Note:** QCSystem is built for real-world production environments using authentic industry forms. All technical specifications and data are sourced directly from manufacturers and suppliers.
 
