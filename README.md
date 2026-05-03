@@ -1,20 +1,34 @@
-🏭 QCSystem - Manufacturing & Quality Control PlatformQCSystem is a specialized web platform designed for production management and monitoring in plastic injection molding facilities. The system tracks the complete production lifecycle—from technical injection molding machine parameters to final quality control.
-🌐 Live Demo (Azure): https://qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net
+# 🏭 QCSystem - Manufacturing & Quality Control Platform
 
-Note: QCSystem is built for real-world production environments using authentic industry forms. All technical specifications and data are sourced directly from manufacturers and suppliers.
-🚀 Core Modules
-Jobs & Job Logs: Work order management and real-time detailed production cycle tracking.
-Equipment: Comprehensive database for Injection Molding Machines (IMMs) and Molds/Tools, including technical specifications and compatibility mapping.
-Materials: Management of raw materials (polymers like PP, PPC, PPH) and additives used in production.
-QC Logging: Quality assurance and inspection module for recording deviations and QC issues.
-Reports: Dynamic reporting engine generating analytics on Scrap rates and Overall Equipment Effectiveness (OEE).
-Trading Parties: Supplier and partner relationship management.
-🛠 Tech StackBackend: Python 3.14 / Django 6.0
-Database: PostgreSQL (Neon.tech)
-Asynchronous Tasks: Celery + Redis (for email notifications and automated monthly reports)
-Frontend: Django Templates + Bootstrap 5 + Chart.js
-Deployment: Azure App Service & GitHub Actions (CI/CD)
-📂 Project StructuretextQCSystem/
+**QCSystem** is a specialized web platform designed for production management and monitoring in plastic injection molding facilities. The system tracks the complete production lifecycle—from technical injection molding machine parameters to final quality control.
+
+🌐 **Live Demo (Azure):** [https://azurewebsites.net](https://azurewebsites.net)
+
+> **Note:** QCSystem is built for real-world production environments using authentic industry forms. All technical specifications and data are sourced directly from manufacturers and suppliers.
+
+---
+
+## 🚀 Core Modules
+
+*   **Jobs & Job Logs**: Work order management and real-time detailed production cycle tracking.
+*   **Equipment**: Comprehensive database for Injection Molding Machines (IMMs) and Molds/Tools, including technical specifications and compatibility mapping.
+*   **Materials**: Management of raw materials (polymers like PP, PPC, PPH) and additives used in production.
+*   **QC Logging**: Quality assurance and inspection module for recording deviations and QC issues.
+*   **Reports**: Dynamic reporting engine generating analytics on scrap rates and production efficiency.
+*   **Trading Parties**: Supplier and partner relationship management.
+
+## 🛠 Tech Stack
+
+*   **Backend**: Python 3.14 / Django 6.0
+*   **Database**: [PostgreSQL (Neon.tech)](https://neon.tech)
+*   **Asynchronous Tasks**: Celery + Redis (for email notifications and automated monthly reports)
+*   **Frontend**: Django Templates + Bootstrap 5 + Chart.js
+*   **Deployment**: Azure App Service & GitHub Actions (CI/CD)
+
+## 📂 Project Structure
+
+```text
+QCSystem/
 ├── accounts/          # User authentication, roles, and HR management
 ├── equipment/         # Machines (BMB), Tooling/Molds, and compatibility
 ├── jobs/              # Work orders, Process logs, and Scrap tracking
@@ -25,8 +39,23 @@ Deployment: Azure App Service & GitHub Actions (CI/CD)
 ├── shared/            # Common views, error handlers (404/500), and mixins
 ├── templates/         # Global HTML templates (What More UK Corporate Style)
 ├── .github/           # CI/CD pipelines for automated Azure deployment
-└── requirements.txt   # Dependencies (Django, Celery, Redis, etc.)
+└── requirements.txt   # Project dependencies
+```
 
+---
+
+## ⚙️ Architecture Flow
+
+```mermaid
+graph TD
+    User[Operator/Manager] -->|HTTP| App[Azure App Service]
+    App -->|Queries| DB[(PostgreSQL)]
+    App -->|Tasks| Worker[Celery Worker]
+    Worker -->|Queue| Redis[(Redis)]
+```
+
+---
+© 2025-2026 Developed by **Kamen Kadiyski**
 
 
 
@@ -121,3 +150,4 @@ graph TD
 
     Фйала users съдържа данни за логване в различни акаунти, като фукционалността зависи от правата на съответните потребители.
     За по-подробно описание виж [MANUAL.md](MANUAL.md) файла.
+© 2025-2026 Developed by **Kamen Kadiyski**
