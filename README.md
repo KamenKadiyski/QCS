@@ -73,13 +73,9 @@ graph TD
    ```bash
    pip install -r requirements.txt
 
-4.За да стартирате проекта с готовата база данни, създайте файл `.env` и поставете следното:
-   ```bash
-   DATABASE_URL='postgresql://neondb_owner:npg_Cs0QxdvN4lJB@ep-floral-star-abp036t6-pooler.eu-west-2.aws.neon.tech/qcmonitoringsystem?sslmode=require&channel_binding=require'
-   SECRET_KEY='django-insecure-c0w4cc9fztz5xm2gst!u75*n+7fe#1qu^l4^1lcg__c4!$su7k'
-   REDIS_STRING='rediss://:wPq10JfXpfsnvYKZTJjnfo0rxV9ESw6wOAzCaF8YDXE=@qcs.redis.cache.windows.net:6380/0'
+
   ```
-### Важно: Проекта работи с база данни качена на neon.tech ! Не е необходимо да се прилагат миграции!
+### Важно: Проекта работи с база данни качена на neon.tech ! За по-подробно запознаване с проекта можете да отворите линка по-горе и да разгледате. 
 
 
 
