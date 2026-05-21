@@ -10,44 +10,44 @@
                 {% csrf_token %}
                 <div class="row">
                     <div class="col-md-8 mb-4">
-                        <label class="form-label fw-bold">Избор на Работа</label>
+                        <label class="form-label fw-bold">Job Selection</label>
                         <div class="input-group">
                             {{ form.job }}
                             <button type="submit" name="_refresh" class="btn btn-secondary">
-                                <i class="bi bi-arrow-clockwise"></i> Зареди матрици
+                                <i class="bi bi-arrow-clockwise"></i> Load the tools
                             </button>
                         </div>
                     </div>
                     <div class="col-md-4 mb-4">
-                        <label class="form-label fw-bold">Общо количество</label>
+                        <label class="form-label fw-bold">Job amount</label>
                         {{ form.order_total_amount }}
                     </div>
                 </div>
 
                 <hr class="my-4">
-                <h5 class="mb-4 text-primary"><i class="bi bi-gear-fill me-2"></i>Ресурси и Настройки</h5>
+                <h5 class="mb-4 text-primary"><i class="bi bi-gear-fill me-2"></i>Resources and Settings</h5>
                 <div class="col-md-6 mb-3">
-                        <label class="form-label fw-bold">Матрица</label>
+                        <label class="form-label fw-bold">Tool</label>
                         <div class="input-group">
                             {{ form.current_tool }}
                             <button type="submit" name="_refresh" class="btn btn-sm btn-outline-secondary">
-                            Филтрирай машини
+                            Filter machines
                             </button>
                         </div>
                 </div>
                 <div class="row g-3">
                     <div class="col-md-6 mb-3">
-                        <label class="form-label fw-bold">Машина</label>
+                        <label class="form-label fw-bold">Machine</label>
                         {{ form.current_machine }}
                     </div>
 
 
                     <div class="col-md-6 mb-3">
-                        <label class="form-label fw-bold">Материал</label>
+                        <label class="form-label fw-bold">Material</label>
                         {{ form.current_material }}
                     </div>
                     <div class="col-md-6 mb-3">
-                        <label class="form-label fw-bold">Добавка</label>
+                        <label class="form-label fw-bold">Additive</label>
                         {{ form.current_additive }}
                     </div>
                 </div>
@@ -55,13 +55,13 @@
                 <div class="mt-4 p-3 bg-light rounded d-flex align-items-center">
                     <div class="form-check form-switch">
                         {{ form.is_complete }}
-                        <label class="form-check-label fw-bold ms-2">Завършена работа</label>
+                        <label class="form-check-label fw-bold ms-2">Job done?</label>
                     </div>
                 </div>
 
                 <div class="d-flex border-top mt-5 pt-4">
-                    <button class="btn btn-primary px-5 shadow-sm" type="submit">Запази лог</button>
-                    <a href="{% url 'jobs:list_jobs_logs' %}" class="btn btn-outline-secondary ms-auto">Назад</a>
+                    <button class="btn btn-primary px-5 shadow-sm" type="submit">Save log</button>
+                    <a href="{% url 'jobs:list_jobs_logs' %}" class="btn btn-outline-secondary ms-auto">Back</a>
                 </div>
 
                 {% if form.errors %}

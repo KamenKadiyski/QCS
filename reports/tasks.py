@@ -15,7 +15,7 @@ def job_log_mail_notification(job_code):
         subject='New job',
         message=f'A new job {job_code} was created',
         from_email='system_log@wathmoreuk.com',
-        recipient_list=['steve.box@whatmore.com'],
+        recipient_list=['Steve.Box@whatmore.com','Matt.Hand@whatmore.com'],
     )
 
 
@@ -31,7 +31,7 @@ def scrap_persent_mail_notification(job_log_id, job_code):
             message=f'The scrap level exceeds the specified percentage. For more information, '
                     f'please visit: http://127.0.0.1:8000/reports/scrap_job/?job_code={job_code}',
             from_email='system_log@wathmoreuk.com',
-            recipient_list=['steve.box@whatmore.com'],
+            recipient_list=['Steve.Box@whatmore.com','Matt.Hand@whatmore.com'],
         )
 
 
@@ -62,5 +62,5 @@ def check_monthly_scrap_rate():
                 f'Total produced: {total_produced} pcs'
             ),
             from_email='system_log@wathmoreuk.com',
-            recipient_list=['steve.box@whatmore.com'],
+            recipient_list=['Steve.Box@whatmore.com','Matt.Hand@whatmore.com'],
         )
