@@ -1,5 +1,68 @@
 # 🏭 QCSystem - Manufacturing & Quality Control Platform
 
+**QCSystem** is a specialized web platform designed for production management and monitoring in plastic injection molding facilities. The system tracks the complete production lifecycle—from technical injection molding machine parameters to final quality control.
+
+🌐 **Live Demo (Azure):** [https://qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net](https://qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net)
+
+> **Note:** QCSystem is built for real-world production environments using authentic industry forms. All technical specifications and data are sourced directly from manufacturers and suppliers.
+
+---
+
+## 🚀 Core Modules
+
+*   **Jobs & Job Logs**: Work order management and real-time detailed production cycle tracking.
+*   **Equipment**: Comprehensive database for Injection Molding Machines (IMMs) and Molds/Tools, including technical specifications and compatibility mapping.
+*   **Materials**: Management of raw materials (polymers like PP, PPC, PPH) and additives used in production.
+*   **QC Logging**: Quality assurance and inspection module for recording deviations and QC issues.
+*   **Reports**: Dynamic reporting engine generating analytics on scrap rates and production efficiency.
+*   **Trading Parties**: Supplier and partner relationship management.
+
+## 🛠 Tech Stack
+
+*   **Backend**: Python 3.14 / Django 6.0
+*   **Database**: [PostgreSQL (Neon.tech)](https://neon.tech)
+*   **Asynchronous Tasks**: Celery + Redis (for email notifications and automated monthly reports)
+*   **Frontend**: Django Templates + Bootstrap 5 + Chart.js
+*   **Deployment**: Azure App Service & GitHub Actions (CI/CD)
+
+## 📂 Project Structure
+
+```text
+QCSystem/
+├── accounts/          # User authentication, roles, and HR management
+├── equipment/         # Machines (BMB), Tooling/Molds, and compatibility
+├── jobs/              # Work orders, Process logs, and Scrap tracking
+├── materials/         # Raw materials (PP, PPC, PPH) and additives
+├── qcloging/          # Quality Control and inspection sheets
+├── reports/           # Dynamic Report Engine with Chart.js visualizations
+├── qcsystem/          # Core project configuration
+├── shared/            # Common views, error handlers (404/500), and mixins
+├── templates/         # Global HTML templates (What More UK Corporate Style)
+├── .github/           # CI/CD pipelines for automated Azure deployment
+└── requirements.txt   # Project dependencies
+```
+
+---
+
+## ⚙️ Architecture Flow
+
+```mermaid
+graph TD
+    User[Operator/Manager] -->|HTTP| App[Azure App Service]
+    App -->|Queries| DB[(PostgreSQL)]
+    App -->|Tasks| Worker[Celery Worker]
+    Worker -->|Queue| Redis[(Redis)]
+```
+
+---
+© 2025-2026 Developed by **Kamen Kadiyski**
+
+
+
+BG Version
+
+# 🏭 QCSystem - Manufacturing & Quality Control Platform
+
 **QCSystem** е специализирана уеб платформа за управление и мониторинг на производството в заводи за пластмасови изделия. Системата проследява жизнения цикъл на продукцията – от техническите параметри на шприцмашините до финалния качествен контрол.
 
 🌐 **Live Demo (Azure):** [https://qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net](https://qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net)
@@ -73,22 +136,18 @@ graph TD
    ```bash
    pip install -r requirements.txt
 
-4.За да стартирате проекта с готовата база данни, създайте файл `.env` и поставете следното:
-   ```bash
-   DATABASE_URL='postgresql://neondb_owner:npg_Cs0QxdvN4lJB@ep-floral-star-abp036t6-pooler.eu-west-2.aws.neon.tech/qcmonitoringsystem?sslmode=require&channel_binding=require'
-   SECRET_KEY='django-insecure-c0w4cc9fztz5xm2gst!u75*n+7fe#1qu^l4^1lcg__c4!$su7k'
-   REDIS_STRING='rediss://:wPq10JfXpfsnvYKZTJjnfo0rxV9ESw6wOAzCaF8YDXE=@qcs.redis.cache.windows.net:6380/0'
+
   ```
-### Важно: Проекта работи с база данни качена на neon.tech ! Не е необходимо да се прилагат миграции!
+### Важно: Проекта работи с база данни качена на neon.tech ! За по-подробно запознаване с проекта можете да отворите линка  и да разгледате. 
+🌐 **Live Demo (Azure):** [https://qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net](https://qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net)
 
 
 
-5.За админ панела:
-   виж [CREDENTIALS.md](CREDENTIALS.md) файла.
 
 
-6. Допълнителни данни:
+4. Допълнителни данни:
     В папка data_folder има необходими данни за машини и матрици, които са във базата данни. Има създадени два файла, които са в съответните папки за да могат да се извършват тестове на фукционалност
 
     Фйала users съдържа данни за логване в различни акаунти, като фукционалността зависи от правата на съответните потребители.
     За по-подробно описание виж [MANUAL.md](MANUAL.md) файла.
+© 2025-2026 Developed by **Kamen Kadiyski**

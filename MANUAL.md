@@ -1,3 +1,114 @@
+# Project Overview
+
+## 📦 Modules
+
+---
+
+## 👥 Accounts
+This module manages human resources and system access.
+
+- Employees are created within the system; for key roles, a login account is also generated.
+- Each account has access only to the functions relevant to its specific duties.
+- Upon account creation, an email is sent to the direct supervisor or the HR department containing:
+  - Username
+  - Automatically generated initial password
+- Employees can subsequently change their passwords.
+- Test login credentials with various access levels are available in `data_folder/users`.
+
+---
+
+## 🏭 Equipment
+This module manages equipment — **machines and molds**.
+
+- Built using the **Django Rest Framework**.
+- Data is loaded from **JSON files** to prevent manual entry errors.
+- The manufacturer provides a JSON file used for integration.
+- When a machine is created, **Django signals** automatically link all compatible molds.
+- Sample JSON files are located in `data_folder/machines` and `data_folder/tools`.
+
+---
+
+## 📦 Jobs
+This module manages core data for jobs and production orders.
+
+### Key Functions
+- Creation and management of Job records.
+- Management of **JobLog** — a log of ongoing jobs.
+- Management of **ScrapReason** and **ScrapLog**.
+
+### Focus: JobLog
+- Records produced and scrapped production.
+- Enables tracking of production process issues.
+- If scrap exceeds **1.5%**, it may indicate:
+  - A mold issue
+  - A machine issue
+  - Delayed response from the mechanic
+- When specific thresholds are exceeded, an **email notification is sent to managers**.
+
+---
+
+## 🧪 Materials
+This module manages the materials required for production.
+
+- **Materials** – Primary raw materials.
+- **Additives** – Colorants, transparency enhancers, etc.
+
+---
+
+## 🔍 QCLogging
+This module describes quality control inspections.
+
+### QC Log
+- Records every inspection performed by a Quality Control officer.
+
+### QC Issue
+- Records all quality-related problems:
+  - Production defects
+  - Equipment or mold issues
+  - Operator errors (incorrect packaging, missing labels, etc.)
+- Each issue is associated with an employee responsible for resolving it.
+
+---
+
+## 🚚 TradingParties
+This module describes suppliers and material quality issues.
+
+- Tracks suppliers of primary materials and additives.
+- Registers issues such as:
+  - Poor visual appearance
+  - Excessive flash/trimming required
+  - Bubbles
+  - Improperly packaged products
+  - Poor additive mixing
+  - And others.
+
+---
+
+## 📊 Reports
+A key module for analysis and visualization.
+
+### Key Functions
+- Report generation via a universal report engine.
+- Filtering by parameters (date, machine, material, job, etc.).
+- Graphical data representation using **Chart.js**.
+- Automatic notifications via signals:
+  - Exceeded scrap levels.
+  - New user creation (to provide login credentials).
+  - New job creation.
+  - Monthly reports on total scrap levels.
+
+### Universal Visualization Page
+- Dynamic.
+- Universal for all report types.
+- Supports tables, charts, and combined visualizations.
+
+
+
+
+
+**BG Version**
+
+
 ---
 
 # Project Overview

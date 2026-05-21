@@ -5,8 +5,8 @@
 ### 🔑 Администраторски панел (Django Admin)
 Достъп до: `http://127.0.0.1:8000/admin/`
 
-- **Потребител:** `kamen`
-- **Парола:** `Wham1282qcs`
+- **Потребител:** ``
+- **Парола:** ``
 
 Lily Smith 1453 HR lily-smit Lily1282wham
 Steve Box 1437 Production manager  steve-box Steve1282wham
