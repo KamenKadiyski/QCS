@@ -47,7 +47,7 @@ import ssl
 env = environ.Env()
 # 1. Проверка за средата
 IS_AZURE = env.str('WEBSITE_SITE_NAME', default=None) or env.str('AZURE_WEBAPP_NAME', default=None)
-
+REDIS_URL = os.getenv('REDIS_STRING',)
 if IS_AZURE:
     DEBUG = False
     ALLOWED_HOSTS = [
