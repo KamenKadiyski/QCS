@@ -34,19 +34,19 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-default-exam-key-123')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-import os
+
 
 # Използваме WEBSITE_SITE_NAME, която е гарантирана от Azure App Service
-import os
+
 
 # Проверка дали сме в Azure или локално
-import os
 
+import environ
 import os
 import ssl
-
+env = environ.Env()
 # 1. Проверка за средата
-IS_AZURE = os.environ.get('WEBSITE_SITE_NAME') or os.environ.get('AZURE_WEBAPP_NAME')
+IS_AZURE = env.str('WEBSITE_SITE_NAME', default=None) or env.str('AZURE_WEBAPP_NAME', default=None)
 
 if IS_AZURE:
     DEBUG = False
@@ -58,13 +58,15 @@ if IS_AZURE:
         'https://*.azurewebsites.net',
         'https://qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net',
     ]
-    REDIS_URL = os.getenv('REDIS_STRING')
+    # В Azure се указва чрез Application Settings с име 'REDIS_STRING' (трябва да започва с rediss://)
+    REDIS_URL = env.str('REDIS_STRING', default=None)
     EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
 else:
     DEBUG = True
     ALLOWED_HOSTS = ['localhost', '127.0.0.1']
     CSRF_TRUSTED_ORIGINS = ["http://localhost:8000", "http://127.0.0.1:8000"]
-    REDIS_URL =  'redis://127.0.0.1:6379/0'
+    # Локално чете REDIS_URL от .env файла, а ако го няма - пада обратно на локалния non-SSL Redis
+    REDIS_URL = env.str('REDIS_URL', default='redis://127.0.0.1:6379/0')
     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 # 2. CACHE конфигурация (django-redis)
 CACHES = {
@@ -74,6 +76,8 @@ CACHES = {
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
             "CONNECTION_POOL_KWARGS": {
+                "decode_responses": True, # Спестява нуждата ръчно да декодирате bytes към str
+                # Автоматично слага правилния SSL статус спрямо протокола (redis:// или rediss://)
                 "ssl_cert_reqs": ssl.CERT_NONE if REDIS_URL and REDIS_URL.startswith('rediss://') else None
             }
         }
