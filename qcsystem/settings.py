@@ -59,14 +59,38 @@ if IS_AZURE:
         'https://qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net',
     ]
     # В Azure се указва чрез Application Settings с име 'REDIS_STRING' (трябва да започва с rediss://)
-    REDIS_URL = env.str('REDIS_STRING', default=None)
+    CELERY_BROKER_TRANSPORT_OPTIONS = {
+        'ssl': {
+            'ssl_cert_reqs': ssl.CERT_NONE  # Съвпада с вашата логика за сигурност
+        }
+    }
+    # Използваме директен речник за backend конфигурацията, за да изпреварим бъга с URL-а
+    CELERY_RESULT_BACKEND = 'redis://'
+    CELERY_RESULT_BACKEND_TRANSPORT_OPTIONS = CELERY_BROKER_TRANSPORT_OPTIONS
+
+    # Използваме брокерски параметри вместо един дълъг URL
+    CELERY_BROKER_USER = 'default'
+    CELERY_BROKER_PASSWORD = 'HRL0JhanCcDlNzASwrdKS3O6HDroU2zg'
+    CELERY_BROKER_HOST = 'redis-11427.crce287.eu-west-2-2.ec2.cloud.redislabs.com'
+    CELERY_BROKER_PORT = 11427
+    CELERY_BROKER_VHOST = '0'  # Номер на Redis базата данни
+
+    # Задаване и на backend параметрите ръчно
+    CELERY_REDIS_BACKEND_SETTINGS = {
+        'host': CELERY_BROKER_HOST,
+        'port': CELERY_BROKER_PORT,
+        'password': CELERY_BROKER_PASSWORD,
+        'db': 0,
+        'ssl': {'ssl_cert_reqs': ssl.CERT_NONE}
+    }
     EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
 else:
     DEBUG = True
     ALLOWED_HOSTS = ['localhost', '127.0.0.1']
     CSRF_TRUSTED_ORIGINS = ["http://localhost:8000", "http://127.0.0.1:8000"]
     # Локално чете REDIS_URL от .env файла, а ако го няма - пада обратно на локалния non-SSL Redis
-    REDIS_URL = env.str('REDIS_URL', default='redis://127.0.0.1:6379/0')
+    CELERY_BROKER_URL = 'redis://127.0.0.1:6379/0'
+    CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/0'
     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 # 2. CACHE конфигурация (django-redis)
 CACHES = {
