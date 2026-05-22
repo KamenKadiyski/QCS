@@ -11,8 +11,14 @@ app.autodiscover_tasks()
 
 
 app.conf.beat_schedule = {
-    'check_monthly_scrap_rate' :{
+    # 1. Вашият оригинален месечен отчет (изпълнява се в 00:00 на 1-во число)
+    'check_monthly_scrap_rate': {
         'task': 'reports.tasks.check_monthly_scrap_rate',
         'schedule': crontab(minute=0, hour=0, day_of_month='1')
+    },
+    # 2. Новият отчет на всеки 15 минути
+    'check_15min_scrap_rate': {
+        'task': 'reports.tasks.check_15min_scrap_rate',
+        'schedule': crontab(minute='*/15')
     }
 }

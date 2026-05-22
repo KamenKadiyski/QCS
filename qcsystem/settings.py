@@ -59,12 +59,13 @@ if IS_AZURE:
         'https://qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net',
     ]
     REDIS_URL = os.getenv('REDIS_STRING')
+    EMAIL_BACKEND = 'django.core.mail.backends.locmem.EmailBackend'
 else:
     DEBUG = True
     ALLOWED_HOSTS = ['localhost', '127.0.0.1']
     CSRF_TRUSTED_ORIGINS = ["http://localhost:8000", "http://127.0.0.1:8000"]
     REDIS_URL =  'redis://127.0.0.1:6379/0'
-
+    EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 # 2. CACHE конфигурация (django-redis)
 CACHES = {
     "default": {
@@ -279,7 +280,7 @@ STATICFILES_DIRS = [
 if find_spec("whitenoise") is not None:
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # Настройки за MailHog
-EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+
 EMAIL_HOST = "127.0.0.1"
 EMAIL_PORT = 1025
 EMAIL_USE_TLS = False
