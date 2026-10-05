@@ -139,7 +139,7 @@ graph TD
 
   ```
 ### Важно: Проекта работи с база данни качена на neon.tech ! За по-подробно запознаване с проекта можете да отворите линка  и да разгледате. 
-🌐 **Live Demo (Azure):** [https://qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net](https://qcs-bnevesfac4h3dbc5.polandcentral-01.azurewebsites.net)
+🌐 **Live Demo :** [https://qcs.ishistack.dev/](https://qcs.ishistack.dev/)
 
 
 
